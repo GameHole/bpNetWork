@@ -15,7 +15,7 @@ namespace NeuralNetworkTest
             activator.Active(input);
             for (int i = 0; i < logs.Length; i++)
             {
-                Assert.IsTrue(logs[i].isActive, $"index = {i}");
+                Assert.AreEqual("active ",logs[i].log, $"index = {i}");
             }
         }
 

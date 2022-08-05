@@ -5,7 +5,6 @@ namespace NeuralNetwork
     public abstract class ACell
     {
         public double value;
-
         public List<Bulge> inputs { get; private set; } = new List<Bulge>();
         public List<Bulge> outputs { get; private set; } = new List<Bulge>();
         protected Bulge AddInput(ACell cell)
@@ -16,18 +15,22 @@ namespace NeuralNetwork
             return bulge;
         }
 
-        protected void ActiveBulges(List<Bulge> bulges)
+        internal void ActiveBulges(List<Bulge> bulges)
         {
             foreach (var item in bulges)
             {
-                item.active.Access(this);
+                item.active.Active(this);
             }
         }
-        protected void TranBulges(List<Bulge> bulges)
+        public void Reset()
         {
-            foreach (var item in bulges)
+            foreach (var item in inputs)
             {
-                item.tranning.Access(this);
+                item.Reset();
+            }
+            foreach (var item in outputs)
+            {
+                item.Reset();
             }
         }
     }

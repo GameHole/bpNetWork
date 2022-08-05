@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace NeuralNetwork
 {
@@ -13,13 +14,20 @@ namespace NeuralNetwork
         public double ieta;
 
         public double deltaBias { get; private set; }
+
+        private Bulge input => inputs[0];
         public void Tran()
         {
-            ActiveBulges(inputs);
-            var input = inputs[0];
+            input.Reset();
+            input.active.Active(this);
             input.weight = 1;
-            deltaBias = ieta * (value - input.GetValue());
-            TranBulges(inputs);
+            deltaBias = ieta * (value - input.active.GetValue());
+            input.tranning.Active(this);
+        }
+
+        public void Apply()
+        {
+            input.apply.Active(this);
         }
     }
 }

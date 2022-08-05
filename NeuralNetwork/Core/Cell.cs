@@ -2,10 +2,16 @@
 
 namespace NeuralNetwork
 {
-    public class Cell:ACell,IActivable, ITranable
+    public class Cell:ACell,IActivable, ITranable,IApplyable
     {
         public double bias;
-        private Actviter actviter = new Actviter();
+        internal Actviter actviter = new Actviter();
+        public Cell()
+        {
+            act = new CellAct() { cell = this };
+            tran = new CellTran() { cell = this, act = act };
+            apply = new CellApply() { cell = this };
+        }
 
         public Bulge AddInput(Cell cell)
         {
@@ -15,46 +21,29 @@ namespace NeuralNetwork
         {
             return base.AddInput(cell);
         }
-        public event Action onActive;
+        private CellAct act;
+        private CellTran tran;
+        private CellApply apply;
+        public int tranCount { get; private set; }
+
+        public event Action onActive { add => act.onActive += value; remove => act.onActive -= value; }
 
 
         public void Active()
         {
-            ActiveBulges(inputs);
-            ActiveSelf();
-            ActiveBulges(outputs);
-            onActive?.Invoke();
+            act.Active();
+        }
+        public void Apply()
+        {
+            apply.Active();
         }
 
-        private void ActiveSelf()
-        {
-            value = actviter.Actvite(integrate());
-        }
-        public double integrate()
-        {
-            double sum = 0;
-            foreach (var item in inputs)
-            {
-                sum += item.GetValue();
-            }
-            return sum + bias;
-        }
+        public double deltaBias => tran.deltaBias;
 
-        public double deltaBias { get; private set; }
         public void Tran()
         {
-            TranBulges(outputs);
-            deltaBias = integrateDeltaBias() * actviter.Derivative(integrate());
-            TranBulges(inputs);
-        }
-        private double integrateDeltaBias()
-        {
-            double sum = 0;
-            foreach (var item in outputs)
-            {
-                sum += item.tranning.GetDeltaBias();
-            }
-            return sum;
+            tranCount++;
+            tran.Active();
         }
     }
 }

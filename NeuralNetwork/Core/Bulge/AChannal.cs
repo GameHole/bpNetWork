@@ -4,29 +4,52 @@ namespace NeuralNetwork
 {
     public abstract class AChannal
     {
-        public Bulge bulge;
-        private bool isAccessed;
-        internal void Access(ACell cell)
+        protected Bulge bulge;
+        protected ACell from;
+        protected ACell to;
+        public void Init(Bulge bulge, ACell from, ACell to)
         {
-            if (isAccessed) return;
-            isAccessed = true;
-            AccessInternal(cell);
+            this.bulge = bulge;
+            this.from = from;
+            this.to = to;
         }
-        protected void Notify(ACell caller, ACell cell)
+        public bool isActiveted { get; private set; }
+        public void Active(ACell cell)
+        {
+            if (isActiveted) return;
+            isActiveted = true;
+            ActiveInternal(cell);
+        }
+       
+        protected virtual void ActiveSelf() { }
+        protected void ActiveCell(ACell caller, ACell cell)
         {
             if (caller != cell)
-                NotifyAction(cell);
+                ActiveCellAction(cell);
         }
-        protected void NotifyTo(ACell cell)
+ 
+        protected void ActiveInternal(ACell cell)
         {
-            Notify(cell, bulge.to);
+            ActiveCell(cell, fromCell);
+            ActiveSelf();
+            ActiveCell(cell, toCell);
+        }
+        public void Reset()
+        {
+            if (!isActiveted) return;
+            isActiveted = false;
+            onReset();
+        }
+        protected virtual void onReset() 
+        {
+            from.Reset();
+            to.Reset();
         }
 
-        protected void NotifyFrom(ACell cell)
-        {
-            Notify(cell, bulge.from);
-        }
-        protected abstract void NotifyAction(ACell cell);
-        protected abstract void AccessInternal(ACell cell);
+        protected virtual ACell fromCell => from;
+        protected virtual ACell toCell => to;
+        protected abstract void ActiveCellAction(ACell cell);
+        public abstract double GetValue();
+        
     }
 }

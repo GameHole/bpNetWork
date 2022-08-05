@@ -35,15 +35,36 @@ namespace NeuralNetworkTest
             var celDeltaBeias = LossToVHatDerivative * LossToCellBeiasDerivative * actor.Derivative(integration);
             Assert.AreEqual(LossToVHatDerivative, tranOut.deltaBias, 1e-5);
             Assert.AreEqual(1, tranBulge.weight);
-            Assert.AreEqual(integration, cell.integrate());
+            //Assert.AreEqual(integration, cell.integrate());
             Assert.AreEqual(cellValue, cell.value, 1e-5);
             Assert.AreEqual(celDeltaBeias, cell.deltaBias);
-           
+
             for (int i = 0; i < inputBulgess.Length; i++)
             {
                 var fromValue = 1;
-                Assert.AreEqual(celDeltaBeias * fromValue, inputBulgess[i].tranning.deltaWeigth, 1e-5,$"i = {i}");
+                Assert.AreEqual(celDeltaBeias * fromValue, inputBulgess[i].tranning.deltaWeigth, 1e-5, $"i = {i}");
             }
+            tranOut.Apply();
+            Assert.AreEqual(1 + celDeltaBeias, cell.bias);
+            for (int i = 0; i < inputBulgess.Length; i++)
+            {
+                Assert.AreEqual(0.5 + inputBulgess[i].tranning.deltaWeigth, inputBulgess[i].weight, 1e-5, $"i = {i}");
+            }
+        }
+        [Test]
+        public void TestRepeatTranning()
+        {
+            var tran = new TranningCell();
+            var cell = new Cell();
+            var log = new LogCell(cell);
+            var b = tran.AddInput(cell);
+            for (int i = 0; i < 2; i++)
+            {
+                tran.Tran();
+            }
+            Assert.AreEqual("active active ", log.log);
+            Assert.AreEqual(2, b.tranCount);
+            Assert.AreEqual(2, cell.tranCount);
         }
     }
 }

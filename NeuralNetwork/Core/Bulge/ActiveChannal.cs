@@ -2,15 +2,14 @@
 {
     public class ActiveChannal: AChannal
     {
-        protected override void NotifyAction(ACell cell)
+        protected override void ActiveCellAction(ACell cell)
         {
             (cell as IActivable)?.Active();
         }
 
-        protected override void AccessInternal(ACell cell)
+        public override double GetValue()
         {
-            NotifyFrom(cell);
-            NotifyTo(cell);
+            return from.value * bulge. weight;
         }
     }
 }

@@ -5,7 +5,7 @@ namespace NeuralNetworkTest
 {
     class LogCell 
     {
-        internal bool isActive;
+        internal string log;
 
         public LogCell(ACell cell)
         {
@@ -13,7 +13,7 @@ namespace NeuralNetworkTest
             {
                 activable.onActive += () =>
                 {
-                    isActive = true;
+                    log += "active ";
                 };
             }
         }

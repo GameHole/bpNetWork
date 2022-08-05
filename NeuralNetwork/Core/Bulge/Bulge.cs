@@ -1,12 +1,18 @@
-﻿namespace NeuralNetwork
+﻿using System;
+
+namespace NeuralNetwork
 {
     public class Bulge
     {
         public double weight;
-        internal ACell from { get; }
-        internal ACell to { get; }
+        private ACell from;
+        private ACell to;
+        public int tranCount;
+
         public TranningChannal tranning { get; }
         public ActiveChannal active { get; }
+        public AChannal apply { get; }
+
         public Bulge(ACell from, ACell to) :this(from,to, 0)
         {
         }
@@ -15,12 +21,19 @@
             this.from = from;
             this.to = to;
             this.weight = weight;
-            tranning = new TranningChannal() { bulge = this };
-            active = new ActiveChannal() { bulge = this };
+            tranning = new TranningChannal();
+            active = new ActiveChannal();
+            apply = new ApplyChannal();
+            tranning.Init(this, from, to);
+            active.Init(this, from, to);
+            apply.Init(this, from, to);
         }
-        public double GetValue()
+
+        public void Reset()
         {
-            return from.value * weight;
+            active.Reset();
+            tranning.Reset();
+            apply.Reset();
         }
     }
 }

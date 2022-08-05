@@ -3,27 +3,30 @@
     public class TranningChannal: AChannal
     {
         public double deltaWeigth;
-        protected override void AccessInternal(ACell cell)
+
+        protected override void ActiveSelf()
         {
-            NotifyTo(cell);
-            deltaWeigth = getToDeltaBata() * bulge.from.value;
-            NotifyFrom(cell);
+            bulge.tranCount++;
+            deltaWeigth = getToDeltaBias() * from.value;
         }
 
-        protected override void NotifyAction(ACell cell)
+        protected override ACell fromCell => to;
+        protected override ACell toCell => from;
+
+        protected override void ActiveCellAction(ACell cell)
         {
             (cell as ITranable)?.Tran();
         }
 
-        private double getToDeltaBata()
+        private double getToDeltaBias()
         {
-            if (bulge.to is ITranable tranable)
+            if (to is ITranable tranable)
                 return tranable.deltaBias;
             return 0;
         }
-        public double GetDeltaBias()
+        public override double GetValue()
         {
-            return getToDeltaBata() * bulge.weight;
+            return getToDeltaBias() * bulge.weight;
         }
     }
 }
