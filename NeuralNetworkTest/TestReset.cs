@@ -18,16 +18,16 @@ namespace NeuralNetworkTest
                 bulges.Add(cell.AddInput(next));
                 cell = next;
             }
-            cell.Active();
-            cell.Tran();
-            cell.Apply();
+            cell.active.Active();
+            cell.tranning.Active();
+            cell.apply.Active();
             foreach (var item in bulges)
             {
                 Assert.IsTrue(item.active.isActiveted);
                 Assert.IsTrue(item.tranning.isActiveted);
                 Assert.IsTrue(item.apply.isActiveted);
             }
-            cell.Reset();
+            cell.Deactive();
             foreach (var item in bulges)
             {
                 Assert.IsFalse(item.active.isActiveted);

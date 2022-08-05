@@ -11,13 +11,14 @@ namespace NeuralNetworkTest
         [SetUp]
         public void SetUp()
         {
-            cell = new Cell() { bias = 1 };
+            cell = new Cell();
+            cell.active.bias = 1;
             actviter = new Actviter();
         }
         [Test]
         public void testCell()
         {
-            Assert.AreEqual(1, cell.bias);
+            Assert.AreEqual(1, cell.active.bias);
             Assert.AreEqual(0, cell.inputs.Count);
             Assert.AreEqual(0,cell.outputs.Count);
         }
@@ -25,8 +26,8 @@ namespace NeuralNetworkTest
         public void testInitCell()
         {
             cell = new Cell();
-            Assert.GreaterOrEqual(cell.bias,0);
-            Assert.LessOrEqual(cell.bias, 1);
+            Assert.GreaterOrEqual(cell.active.bias,0);
+            Assert.LessOrEqual(cell.active.bias, 1);
         }
         [Test]
         public void testIntegration()
@@ -38,7 +39,7 @@ namespace NeuralNetworkTest
                 bulg.weight = 0.1 * idx;
             }
             var integration = 1 * 0.1 + 2 * 0.2 + 3 * 0.3 + 1;
-            cell.Active();
+            cell.active.Active();
             Assert.AreEqual(actviter.Actvite(integration), cell.value, 1e-5);
         }
     }

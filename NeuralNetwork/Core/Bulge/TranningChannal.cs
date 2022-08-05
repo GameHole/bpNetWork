@@ -2,27 +2,22 @@
 {
     public class TranningChannal: AChannal
     {
+        public CountingChannal counting;
         public double deltaWeigth;
 
         protected override void ActiveSelf()
         {
-            bulge.tranCount++;
+            counting.tranCount++;
             deltaWeigth = getToDeltaBias() * from.value;
         }
 
-        protected override ACell fromCell => to;
-        protected override ACell toCell => from;
+        protected override Cell fromCell => to;
+        protected override Cell toCell => from;
 
-        protected override void ActiveCellAction(ACell cell)
-        {
-            (cell as ITranable)?.Tran();
-        }
-
+        protected override ACellChannal getCellChannal(Cell cell) => cell.tranning;
         private double getToDeltaBias()
         {
-            if (to is ITranable tranable)
-                return tranable.deltaBias;
-            return 0;
+            return to.tranning.deltaBias;
         }
         public override double GetValue()
         {

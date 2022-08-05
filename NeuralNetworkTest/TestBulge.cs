@@ -26,10 +26,10 @@ namespace NeuralNetworkTest
         [Test]
         public void testResetBulge()
         {
-            var bulge = new Bulge(new ValueCell(), new ValueCell());
+            var bulge = new Bulge(new Cell(), new Cell());
             bulge.active.Active(null);
             bulge.tranning.Active(null);
-            bulge.Reset();
+            bulge.Deactive();
             Assert.IsFalse(bulge.active.isActiveted);
             Assert.IsFalse(bulge.tranning.isActiveted);
         }

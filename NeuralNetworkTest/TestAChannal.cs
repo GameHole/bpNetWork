@@ -31,7 +31,7 @@ namespace NeuralNetworkTest
             channal.Active(null);
             for (int i = 0; i < 2; i++)
             {
-                channal.Reset();
+                channal.Deactive();
             }
             Assert.IsFalse(channal.isActiveted);
             Assert.AreEqual("activereset", channal.log);

@@ -14,15 +14,14 @@ namespace NeuralNetworkTest
             throw new NotImplementedException();
         }
 
-        protected override void ActiveCellAction(ACell cell)
-        {
-            
-        }
         protected override void ActiveSelf()
         {
             log += "active";
         }
-        protected override void onReset()
+
+        protected override ACellChannal getCellChannal(Cell cell) => null;
+
+        protected override void onDeactive()
         {
             log += "reset";
         }

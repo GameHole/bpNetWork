@@ -7,15 +7,12 @@ namespace NeuralNetworkTest
     {
         internal string log;
 
-        public LogCell(ACell cell)
+        public LogCell(Cell cell)
         {
-            if(cell is IActivable activable)
+            cell.active.onActive += () =>
             {
-                activable.onActive += () =>
-                {
-                    log += "active ";
-                };
-            }
+                log += "active ";
+            };
         }
     }
 }

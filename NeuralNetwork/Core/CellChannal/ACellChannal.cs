@@ -4,16 +4,18 @@ using System.Text;
 
 namespace NeuralNetwork
 {
-    abstract class ACellChannal
+    public abstract class ACellChannal
     {
         public Cell cell;
+
+        protected virtual List<Bulge> toBulges => cell.outputs;
+        protected virtual List<Bulge> fromBulges => cell.inputs;
         public virtual double integrate()
         {
             double sum = 0;
             foreach (var item in fromBulges)
             {
-                var channal = getChannal(item);
-                sum += channal.GetValue();
+                sum += getChannal(item).GetValue();
             }
             return sum;
         }
@@ -27,13 +29,9 @@ namespace NeuralNetwork
         {
             foreach (var item in bulges)
             {
-                var channal = getChannal(item);
-                channal.Active(cell);
+                getChannal(item).Active(cell);
             }
         }
-
-        protected virtual List<Bulge> toBulges => cell.outputs;
-        protected virtual List<Bulge> fromBulges => cell.inputs;
         protected abstract void ActiveSelf();
         protected abstract AChannal getChannal(Bulge item);
     }

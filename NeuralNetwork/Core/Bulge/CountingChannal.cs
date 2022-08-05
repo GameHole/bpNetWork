@@ -4,16 +4,21 @@ using System.Text;
 
 namespace NeuralNetwork
 {
-    public class ApplyChannal : AChannal
+    public class CountingChannal : AChannal
     {
+        public int tranCount;
         public override double GetValue()
         {
             throw new NotImplementedException();
         }
+
+        protected override ACellChannal getCellChannal(Cell cell)
+        {
+            return cell.counting;
+        }
         protected override void ActiveSelf()
         {
-            bulge.weight += bulge.tranning.deltaWeigth;
+            tranCount = 0;
         }
-        protected override ACellChannal getCellChannal(Cell cell) => cell.apply;
     }
 }

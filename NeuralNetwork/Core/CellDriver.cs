@@ -2,9 +2,9 @@
 {
     public class CellDriver
     {
-        public void Active(ACell cell)
+        public void Active(Cell cell)
         {
-            (cell as IActivable)?.Active();
+            cell.active.Active();
         }
 
     }

@@ -5,35 +5,40 @@ namespace NeuralNetwork
     public class Bulge
     {
         public double weight;
-        private ACell from;
-        private ACell to;
-        public int tranCount;
+        private Cell from;
+        private Cell to;
+       
 
         public TranningChannal tranning { get; }
         public ActiveChannal active { get; }
+        public CountingChannal counting { get; }
         public AChannal apply { get; }
 
-        public Bulge(ACell from, ACell to) :this(from,to, 0)
+        public Bulge(Cell from, Cell to) :this(from,to, 0)
         {
         }
-        public Bulge(ACell from,ACell to,double weight)
+        public Bulge(Cell from,Cell to,double weight)
         {
             this.from = from;
             this.to = to;
             this.weight = weight;
-            tranning = new TranningChannal();
+            counting = new CountingChannal();
+            tranning = new TranningChannal() { counting = counting };
             active = new ActiveChannal();
+
             apply = new ApplyChannal();
+            
             tranning.Init(this, from, to);
             active.Init(this, from, to);
             apply.Init(this, from, to);
+            counting.Init(this, from, to);
         }
 
-        public void Reset()
+        public void Deactive()
         {
-            active.Reset();
-            tranning.Reset();
-            apply.Reset();
+            active.Deactive();
+            tranning.Deactive();
+            apply.Deactive();
         }
     }
 }

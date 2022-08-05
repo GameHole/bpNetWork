@@ -4,12 +4,12 @@ using System.Text;
 
 namespace NeuralNetwork
 {
-    class CellTran : ACellChannal
+    public class TranningCellChannal : ACellChannal
     {
-
-        public CellAct act;
-        public double deltaBias { get; private set; }
-
+        public ActiveCellChannal act;
+        public CountingCellChannal countting;
+        public double deltaBias { get;internal set; }
+        
 
         protected override List<Bulge> toBulges => cell.inputs;
 
@@ -18,6 +18,7 @@ namespace NeuralNetwork
         protected override void ActiveSelf()
         {
             deltaBias = integrate() * cell.actviter.Derivative(act.integrate());
+            countting.tranCount++;
         }
 
         protected override AChannal getChannal(Bulge item)

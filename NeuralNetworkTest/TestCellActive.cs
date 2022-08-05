@@ -9,7 +9,7 @@ namespace NeuralNetworkTest
     class TestCellActive
     {
         private CellDriver activator = new CellDriver();
-        private void AssertCells(ACell input, ACell[] cells)
+        private void AssertCells(Cell input, Cell[] cells)
         {
             var logs = decCells(cells);
             activator.Active(input);
@@ -24,12 +24,13 @@ namespace NeuralNetworkTest
             var cells = new Cell[count];
             for (int i = 0; i < cells.Length; i++)
             {
-                cells[i] = new Cell() { bias = 1 };
+                cells[i] = new Cell();
+                cells[i].active.bias = 1;
             }
 
             return cells;
         }
-        private LogCell[] decCells(ACell[] cells)
+        private LogCell[] decCells(Cell[] cells)
         {
             var logs = new LogCell[cells.Length];
             for (int i = 0; i < cells.Length; i++)
@@ -79,7 +80,7 @@ namespace NeuralNetworkTest
             var cells = makeCells(3);
             for (int i = 0; i < cells.Length; i++)
             {
-                cells[i].bias = 0;
+                cells[i].active.bias = 0;
             }
             cells[2].AddInput(cells[0]);
             cells[2].AddInput(cells[1]);

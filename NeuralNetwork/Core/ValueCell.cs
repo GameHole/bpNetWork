@@ -3,15 +3,13 @@ using System.Collections.Generic;
 
 namespace NeuralNetwork
 {
-    public class ValueCell : ACell,IActivable
+    public class ValueCell : Cell
     {
-
-        public event Action onActive;
-
-        public void Active() 
+        public ValueCell():base()
         {
-            ActiveBulges(outputs);
-            onActive?.Invoke();
+            active = new InputActiveCellChannal { cell = this };
+            tranning = null;
+            apply = null;
         }
     }
 }

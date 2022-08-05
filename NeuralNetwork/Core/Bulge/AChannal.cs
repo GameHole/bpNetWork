@@ -5,16 +5,16 @@ namespace NeuralNetwork
     public abstract class AChannal
     {
         protected Bulge bulge;
-        protected ACell from;
-        protected ACell to;
-        public void Init(Bulge bulge, ACell from, ACell to)
+        protected Cell from;
+        protected Cell to;
+        public void Init(Bulge bulge, Cell from, Cell to)
         {
             this.bulge = bulge;
             this.from = from;
             this.to = to;
         }
         public bool isActiveted { get; private set; }
-        public void Active(ACell cell)
+        public void Active(Cell cell)
         {
             if (isActiveted) return;
             isActiveted = true;
@@ -22,33 +22,32 @@ namespace NeuralNetwork
         }
        
         protected virtual void ActiveSelf() { }
-        protected void ActiveCell(ACell caller, ACell cell)
+        protected void ActiveCell(Cell caller, Cell cell)
         {
             if (caller != cell)
-                ActiveCellAction(cell);
+                getCellChannal(cell)?.Active();
         }
- 
-        protected void ActiveInternal(ACell cell)
+        
+        protected void ActiveInternal(Cell cell)
         {
             ActiveCell(cell, fromCell);
             ActiveSelf();
             ActiveCell(cell, toCell);
         }
-        public void Reset()
+        public void Deactive()
         {
             if (!isActiveted) return;
             isActiveted = false;
-            onReset();
+            onDeactive();
         }
-        protected virtual void onReset() 
+        protected virtual void onDeactive() 
         {
-            from.Reset();
-            to.Reset();
+            from.Deactive();
+            to.Deactive();
         }
-
-        protected virtual ACell fromCell => from;
-        protected virtual ACell toCell => to;
-        protected abstract void ActiveCellAction(ACell cell);
+        protected abstract ACellChannal getCellChannal(Cell cell);
+        protected virtual Cell fromCell => from;
+        protected virtual Cell toCell => to;
         public abstract double GetValue();
         
     }
