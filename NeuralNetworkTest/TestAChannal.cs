@@ -9,11 +9,12 @@ namespace NeuralNetworkTest
     class TestAChannal
     {
         LogChannal channal;
+        Bulge bulge;
         [SetUp]
         public void SetUp()
         {
             channal = new LogChannal();
-            var bulge = new Bulge();
+            bulge = new Bulge();
             var cell = new Cell();
             cell.units.AddUnit<LogUnit>();
             bulge.from = cell;
@@ -26,7 +27,7 @@ namespace NeuralNetworkTest
             Assert.IsFalse(channal.isActiveted);
             for (int i = 0; i < 2; i++)
             {
-                channal.Active(null);
+                bulge.Active(null,channal);
             }
             Assert.IsTrue(channal.isActiveted);
             Assert.AreEqual("active", channal.log);
@@ -34,13 +35,12 @@ namespace NeuralNetworkTest
         [Test]
         public void TestReset()
         {
-            channal.Active(null);
+            bulge.Active(null, channal);
             for (int i = 0; i < 2; i++)
             {
-                channal.Deactive();
+                bulge.Deactive(channal);
             }
             Assert.IsFalse(channal.isActiveted);
-            Assert.AreEqual("activereset", channal.log);
         }
     }
 }

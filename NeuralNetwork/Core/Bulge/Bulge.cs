@@ -25,10 +25,14 @@ namespace NeuralNetwork
             channal.isActiveted = true;
             ActiveInternal(cell, channal);
         }
+        internal void Active(Cell cell, Type channalType)
+        {
+            Active(cell, units.Get(channalType));
+        }
         private void ActiveCell(Cell caller, Cell cell, AChannal channal)
         {
             if (caller != cell)
-                cell.units.GetUnit(channal.GetType()).Active();
+                cell.Active(channal.GetType());
         }
         internal void ActiveInternal(Cell cell,AChannal channal)
         {
@@ -47,10 +51,9 @@ namespace NeuralNetwork
         {
             if (!channal.isActiveted) return;
             channal.isActiveted = false;
-            channal.onDeactive();
             Deactive();
         }
-        public void Deactive()
+        private void Deactive()
         {
             from.Deactive();
             to.Deactive();

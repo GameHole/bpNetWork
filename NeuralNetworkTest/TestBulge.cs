@@ -32,7 +32,7 @@ namespace NeuralNetworkTest
             var bulge = cell.AddInput(new Cell());
             foreach (var item in cell.units)
             {
-                item.Active();
+                cell.Active(item);
             }
             cell.Deactive();
             foreach (var item in bulge.units)

@@ -6,7 +6,7 @@ namespace NeuralNetwork
 {
     class InputActiveCellUnit : ActiveCellUnit
     {
-        protected override void ActiveSelf()
+        public override void ActiveSelf()
         {
             
         }

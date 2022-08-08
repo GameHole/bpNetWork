@@ -6,7 +6,7 @@ namespace NeuralNetwork
 {
     public class NoneTranningUnit:TranningCellUnit
     {
-        protected override void ActiveSelf()
+        public override void ActiveSelf()
         {
         }
     }

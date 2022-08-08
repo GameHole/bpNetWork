@@ -7,10 +7,7 @@ namespace NeuralNetwork
     public class CountingChannal : AChannal
     {
         public Counter counter = new Counter();
-
-        public int tranCount { get => counter.tranCount; }
-
-        public override double GetValue()
+        public double GetValue()
         {
             return counter.GetValue();
         }
@@ -18,11 +15,6 @@ namespace NeuralNetwork
         public override void ActiveSelf()
         {
             counter.Reset();
-        }
-
-        public void Count(double v)
-        {
-            counter.Count(v);
         }
     }
 }

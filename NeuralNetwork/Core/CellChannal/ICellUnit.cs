@@ -8,8 +8,9 @@ namespace NeuralNetwork
     {
         public Type ChannalType { get; }
         public Cell cell { get; set; }
-        void AddFrom(ICellUnit from, Bulge bulge);
-        void Deactive();
-        void Active();
+        bool activeInverse { get; }
+
+        void AddChannal(Bulge bulge);
+        void ActiveSelf();
     }
 }

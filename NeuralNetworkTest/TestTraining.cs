@@ -64,20 +64,21 @@ namespace NeuralNetworkTest
                 tran.Tran();
             }
             Assert.AreEqual("active active ", log.log);
-            Assert.AreEqual(2, b.units.GetUnit<CountingChannal>().tranCount);
-            Assert.AreEqual(2, cell.units.GetUnit<CountingCellUnit>().tranCount);
+            Assert.AreEqual(2, b.units.GetUnit<CountingChannal>().counter.tranCount);
+            Assert.AreEqual(2, cell.units.GetUnit<CountingCellUnit>().counter.tranCount);
         }
         [Test]
         public void testUnitUseAve()
         {
             var apply = new ApplyCellUnit();
+            apply.cell = new Cell();
             var act = new ActiveCellUnit();
             var counting = new CountingCellUnit();
             apply.active = act;
             apply.counting = counting;
-            counting.totalWidth = 5;
-            counting.tranCount = 10;
-            apply.Active();
+            counting.counter.totalWidth = 5;
+            counting.counter.tranCount = 10;
+            apply.ActiveSelf();
             Assert.AreEqual(0.5, act.bias,1e-5);
         }
         [Test]
@@ -89,10 +90,10 @@ namespace NeuralNetworkTest
             apply.bulge = bulge;
             for (int i = 0; i < 10; i++)
             {
-                counting.Count(i + 1);
+                counting.counter.Count(i + 1);
             }
             apply.counting = counting;
-            apply.Active(null);
+            apply.ActiveSelf();
             Assert.AreEqual(5.5, bulge.weight, 1e-5);
         }
     }

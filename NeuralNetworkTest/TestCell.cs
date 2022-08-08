@@ -29,6 +29,12 @@ namespace NeuralNetworkTest
             Assert.NotNull(act);
             Assert.AreSame(value, bulge.from);
             Assert.AreSame(cell, bulge.to);
+            Assert.AreSame(value, bulge.from);
+            Assert.AreSame(cell, bulge.to);
+            Assert.AreEqual(1, value.outputs.Count);
+            Assert.AreEqual(1, cell.inputs.Count);
+            Assert.AreSame(bulge, value.outputs[0]);
+            Assert.AreSame(bulge, cell.inputs[0]);
         }
         [Test]
         public void testInitCell()
@@ -58,7 +64,7 @@ namespace NeuralNetworkTest
             var integration = 1 * 0.1 + 2 * 0.2 + 3 * 0.3 + 1;
             var act = cell.units.GetUnit<ActiveCellUnit>();
             Assert.AreEqual(integration, act.integrate(), 1e-5);
-            act.Active();
+            cell.Active(act);
             Assert.AreEqual(actviter.Actvite(integration), cell.value, 1e-5);
         }
     }

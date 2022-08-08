@@ -9,19 +9,10 @@ namespace NeuralNetworkTest
     {
         internal string log;
 
-        public override double GetValue()
-        {
-            throw new NotImplementedException();
-        }
 
         public override void ActiveSelf()
         {
             log += "active";
-        }
-
-        public override void onDeactive()
-        {
-            log += "reset";
         }
 
     }

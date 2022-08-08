@@ -20,7 +20,7 @@ namespace NeuralNetwork
         public CountingCellUnit counting;
 
         public ActiveCellUnit active;
-        protected override void ActiveSelf()
+        public override void ActiveSelf()
         {
             active.bias += counting.GetValue();
         }

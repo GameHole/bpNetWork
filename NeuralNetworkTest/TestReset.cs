@@ -20,7 +20,7 @@ namespace NeuralNetworkTest
             }
             foreach (var item in cell.units)
             {
-                item.Active();
+                cell.Active(item);
             }
             foreach (var item in bulges)
             {
@@ -54,7 +54,7 @@ namespace NeuralNetworkTest
             }
             var bu = cells[0].AddInput(cells[1]);
             var log = bu.units.GetUnit<LogChannal>();
-            cells[0].units.GetUnit<LogUnit>().Active();
+            cells[0].Active(cells[0].units.GetUnit<LogUnit>());
             Assert.IsTrue(log.isActiveted);
             cells[0].Deactive();
             Assert.IsFalse(log.isActiveted);

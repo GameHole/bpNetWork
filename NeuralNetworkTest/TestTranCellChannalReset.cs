@@ -16,8 +16,8 @@ namespace NeuralNetworkTest
             var bulge = tran.AddInput(cell);
             tran.Tran();
             tran.Reset();
-            Assert.AreEqual(0, bulge.units.GetUnit<CountingChannal>().tranCount);
-            Assert.AreEqual(0, cell.units.GetUnit<CountingCellUnit>().tranCount);
+            Assert.AreEqual(0, bulge.units.GetUnit<CountingChannal>().counter.tranCount);
+            Assert.AreEqual(0, cell.units.GetUnit<CountingCellUnit>().counter.tranCount);
         }
     }
 }

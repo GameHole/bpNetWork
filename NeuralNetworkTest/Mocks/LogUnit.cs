@@ -7,7 +7,7 @@ namespace NeuralNetworkTest
 {
     class LogUnit : ACellUnit<LogChannal>
     {
-        protected override void ActiveSelf()
+        public override void ActiveSelf()
         {
            
         }

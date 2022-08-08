@@ -17,7 +17,7 @@
         public override void ActiveSelf()
         {
             deltaWeigth = getToDeltaBias() * bulge.from.value;
-            counting.Count(deltaWeigth);
+            counting.counter.Count(deltaWeigth);
         }
 
         internal override bool activeInverse => true;
@@ -27,7 +27,7 @@
         {
             return To.deltaBias;
         }
-        public override double GetValue()
+        public double GetValue()
         {
             return getToDeltaBias() * bulge.weight;
         }

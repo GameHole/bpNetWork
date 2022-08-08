@@ -56,10 +56,10 @@ namespace NeuralNetworkTest
         public void testCellToValue()
         {
             var cell = new Cell();
-            var cells = new ValueCell[2];
+            var cells = new Cell[2];
             for (int i = 0; i < cells.Length; i++)
             {
-                cells[i] = new ValueCell();
+                cells[i] = new Cell();
                 cell.AddInput(cells[i]);
             }
             AssertCells(cells[0], cells);
@@ -84,9 +84,9 @@ namespace NeuralNetworkTest
             }
             cells[2].AddInput(cells[0]);
             cells[2].AddInput(cells[1]);
-            foreach (var item in cells[2].units.GetUnit<ActiveCellUnit>().inputs)
+            foreach (var item in cells[2].inputs)
             {
-                item.bulge.weight = 1;
+                item.weight = 1;
             }
             AssertCells(cells[0], cells);
             var act = new Actviter();

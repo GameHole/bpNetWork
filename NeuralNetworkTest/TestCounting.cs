@@ -32,12 +32,12 @@ namespace NeuralNetworkTest
         public void testUnit()
         {
             var counting = new CountingCellUnit();
-            counting.totalWidth = 5;
-            counting.tranCount = 10;
+            counting.counter.totalWidth = 5;
+            counting.counter.tranCount = 10;
             Assert.AreEqual(0.5, counting.GetValue());
-            counting.Active();
-            Assert.AreEqual(0, counting.tranCount);
-            Assert.AreEqual(0, counting.totalWidth);
+            counting.ActiveSelf();
+            Assert.AreEqual(0, counting.counter.tranCount);
+            Assert.AreEqual(0, counting.counter.totalWidth);
         }
         [Test]
         public void testChannal()
@@ -46,11 +46,11 @@ namespace NeuralNetworkTest
             counting.bulge = new Bulge();
             for (int i = 0; i < 10; i++)
             {
-                counting.Count(0.5);
+                counting.counter.Count(0.5);
             }
             Assert.AreEqual(0.5, counting.GetValue());
-            counting.Active(null);
-            Assert.AreEqual(0, counting.tranCount);
+            counting.ActiveSelf();
+            Assert.AreEqual(0, counting.counter.tranCount);
         }
     }
 }

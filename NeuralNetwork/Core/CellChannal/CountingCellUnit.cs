@@ -6,18 +6,14 @@ namespace NeuralNetwork
 {
     public class CountingCellUnit : ACellUnit<CountingChannal>
     {
-        public int tranCount;
-        public double totalWidth;
-
-        protected override void ActiveSelf()
-        {
-            tranCount = 0;
-            totalWidth = 0;
-        }
-
+        public Counter counter = new Counter();
         public double GetValue()
         {
-            return totalWidth / tranCount;
+            return counter.GetValue();
+        }
+        public override void ActiveSelf()
+        {
+            counter.Reset();
         }
     }
 }

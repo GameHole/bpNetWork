@@ -21,13 +21,21 @@ namespace NeuralNetwork
 
         public double deltaBias { get; set; }
 
-        protected override bool activeInverse => true;
+        public override bool activeInverse => true;
 
-        protected override void ActiveSelf()
+        public override void ActiveSelf()
         {
-            deltaBias = integrate() * cell.actviter.Derivative(active.integrate());
-            countting.tranCount++;
-            countting.totalWidth += deltaBias;
+            deltaBias = integrateInternal() * cell.actviter.Derivative(active.integrate());
+            countting.counter.Count(deltaBias);
+        }
+        private double integrateInternal()
+        {
+            double sum = 0;
+            foreach (var item in cell.outputs)
+            {
+                sum += item.units.GetUnit<TranningChannal>().GetValue();
+            }
+            return sum;
         }
     }
 }

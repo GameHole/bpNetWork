@@ -17,10 +17,6 @@ namespace NeuralNetwork
         }
         public CountingChannal counting;
 
-        public override double GetValue()
-        {
-            throw new NotImplementedException();
-        }
         public override void ActiveSelf()
         {
             bulge.weight += counting.GetValue();

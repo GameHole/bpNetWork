@@ -28,22 +28,22 @@ namespace NeuralNetwork
 
         public void Reset()
         {
-            units.GetUnit<CountingCellUnit>().Active();
+            Active(units.GetUnit<CountingCellUnit>());
         }
 
         public double ieta;
         public void Tran()
         {
             Deactive();
-            units.GetUnit<InputActiveCellUnit>().Active();
+            Active(units.GetUnit<InputActiveCellUnit>());
             input.weight = 1;
             units.GetUnit<NoneTranningUnit>().deltaBias = ieta * (value - input.units.GetUnit<ActiveChannal>().GetValue());
-            units.GetUnit<NoneTranningUnit>().Active();
+            Active(units.GetUnit<NoneTranningUnit>());
         }
 
         public void Apply()
         {
-            units.GetUnit<ApplyCellUnit>().Active();
+            Active(units.GetUnit<ApplyCellUnit>());
         }
     }
 }
