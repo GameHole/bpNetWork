@@ -53,7 +53,7 @@ namespace NeuralNetworkTest
             }
             var bulge = cells[0].AddInput(cells[1]);
 
-            Assert.NotNull(bulge.units.Get(typeof(LogChannal)));
+            Assert.NotNull(bulge.units.GetUnit<LogChannal>());
         }
     }
 }

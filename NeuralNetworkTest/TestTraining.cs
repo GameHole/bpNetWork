@@ -67,6 +67,33 @@ namespace NeuralNetworkTest
             Assert.AreEqual(2, b.units.GetUnit<CountingChannal>().tranCount);
             Assert.AreEqual(2, cell.units.GetUnit<CountingCellUnit>().tranCount);
         }
-
+        [Test]
+        public void testUnitUseAve()
+        {
+            var apply = new ApplyCellUnit();
+            var act = new ActiveCellUnit();
+            var counting = new CountingCellUnit();
+            apply.active = act;
+            apply.counting = counting;
+            counting.totalWidth = 5;
+            counting.tranCount = 10;
+            apply.Active();
+            Assert.AreEqual(0.5, act.bias,1e-5);
+        }
+        [Test]
+        public void testChannalUseAve()
+        {
+            var bulge = new Bulge();
+            var apply = new ApplyChannal();
+            var counting = new CountingChannal();
+            apply.bulge = bulge;
+            for (int i = 0; i < 10; i++)
+            {
+                counting.Count(i + 1);
+            }
+            apply.counting = counting;
+            apply.Active(null);
+            Assert.AreEqual(5.5, bulge.weight, 1e-5);
+        }
     }
 }

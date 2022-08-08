@@ -4,20 +4,26 @@ using System.Text;
 
 namespace NeuralNetwork
 {
-    public class CountingCellUnit : ACellUnit<CountingChannal>
+    public class Counter
     {
         public int tranCount;
         public double totalWidth;
 
-        protected override void ActiveSelf()
+        public double GetValue()
+        {
+            return totalWidth / tranCount;
+        }
+
+        public void Reset()
         {
             tranCount = 0;
             totalWidth = 0;
         }
 
-        public double GetValue()
+        public void Count(double v)
         {
-            return totalWidth / tranCount;
+            tranCount++;
+            totalWidth += v;
         }
     }
 }

@@ -13,14 +13,16 @@ namespace NeuralNetwork
             {
                 base.cell = value;
                 active = value.units.AddUnit<ActiveCellUnit>();
-                tranning = value.units.AddUnit<TranningCellUnit>();
+                counting = value.units.AddUnit<CountingCellUnit>();
             }
         }
-        private ActiveCellUnit active;
-        private TranningCellUnit tranning;
+
+        public CountingCellUnit counting;
+
+        public ActiveCellUnit active;
         protected override void ActiveSelf()
         {
-            active.bias += tranning.deltaBias;
+            active.bias += counting.GetValue();
         }
     }
 }

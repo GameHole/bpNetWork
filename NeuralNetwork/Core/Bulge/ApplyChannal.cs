@@ -6,13 +6,24 @@ namespace NeuralNetwork
 {
     public class ApplyChannal : AChannal
     {
+        public override Bulge bulge 
+        { 
+            get => base.bulge;
+            set
+            {
+                base.bulge = value;
+                counting = value.units.AddUnit<CountingChannal>();
+            }
+        }
+        public CountingChannal counting;
+
         public override double GetValue()
         {
             throw new NotImplementedException();
         }
         protected override void ActiveSelf()
         {
-            bulge.weight += bulge.units.GetUnit<TranningChannal>().deltaWeigth;
+            bulge.weight += counting.GetValue();
         }
     }
 }

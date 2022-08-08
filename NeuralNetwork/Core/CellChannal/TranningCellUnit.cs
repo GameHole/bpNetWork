@@ -19,7 +19,7 @@ namespace NeuralNetwork
         private ActiveCellUnit active;
         private CountingCellUnit countting;
 
-        public double deltaBias { get;internal set; }
+        public double deltaBias { get; set; }
 
         protected override bool activeInverse => true;
 
@@ -27,6 +27,7 @@ namespace NeuralNetwork
         {
             deltaBias = integrate() * cell.actviter.Derivative(active.integrate());
             countting.tranCount++;
+            countting.totalWidth += deltaBias;
         }
     }
 }

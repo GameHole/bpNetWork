@@ -16,8 +16,8 @@
         private TranningCellUnit To => to as TranningCellUnit;
         protected override void ActiveSelf()
         {
-            counting.tranCount++;
             deltaWeigth = getToDeltaBias() * from.cell.value;
+            counting.Count(deltaWeigth);
         }
 
         protected override bool activeInverse => true;
