@@ -15,7 +15,7 @@ namespace NeuralNetwork
             return counter.GetValue();
         }
 
-        protected override void ActiveSelf()
+        public override void ActiveSelf()
         {
             counter.Reset();
         }

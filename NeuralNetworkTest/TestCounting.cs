@@ -43,6 +43,7 @@ namespace NeuralNetworkTest
         public void testChannal()
         {
             var counting = new CountingChannal();
+            counting.bulge = new Bulge();
             for (int i = 0; i < 10; i++)
             {
                 counting.Count(0.5);

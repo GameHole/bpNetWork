@@ -13,6 +13,12 @@ namespace NeuralNetworkTest
         public void SetUp()
         {
             channal = new LogChannal();
+            var bulge = new Bulge();
+            var cell = new Cell();
+            cell.units.AddUnit<LogUnit>();
+            bulge.from = cell;
+            bulge.to = cell;
+            channal.bulge = bulge;
         }
         [Test]
         public void TestActive()

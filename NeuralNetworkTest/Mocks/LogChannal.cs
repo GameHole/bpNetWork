@@ -14,12 +14,12 @@ namespace NeuralNetworkTest
             throw new NotImplementedException();
         }
 
-        protected override void ActiveSelf()
+        public override void ActiveSelf()
         {
             log += "active";
         }
 
-        protected override void onDeactive()
+        public override void onDeactive()
         {
             log += "reset";
         }

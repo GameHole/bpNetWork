@@ -24,13 +24,17 @@ namespace NeuralNetworkTest
         public void testAddFrom()
         {
             var bulge = new Bulge();
+            var lastCell = new Cell();
+            var unitCell = new Cell();
             var last = new LogUnit();
+            last.cell = lastCell;
+            unit.cell = unitCell;
             unit.AddFrom(last, bulge);
             var log = bulge.units.GetUnit<LogChannal>();
             Assert.NotNull(log);
             Assert.AreSame(bulge, log.bulge);
-            Assert.AreSame(last, log.from);
-            Assert.AreSame(unit, log.to);
+            Assert.AreSame(lastCell, bulge.from);
+            Assert.AreSame(unitCell, bulge.to);
             Assert.AreEqual(1, last.outputs.Count);
             Assert.AreEqual(1, unit.inputs.Count);
             Assert.AreSame(log, last.outputs[0]);

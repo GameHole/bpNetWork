@@ -27,8 +27,8 @@ namespace NeuralNetworkTest
             var bulge = cell.AddInput(value);
             var act = bulge.units.GetUnit<ActiveChannal>();
             Assert.NotNull(act);
-            Assert.AreSame(value,act.from.cell);
-            Assert.AreSame(cell,act.to.cell);
+            Assert.AreSame(value, bulge.from);
+            Assert.AreSame(cell, bulge.to);
         }
         [Test]
         public void testInitCell()

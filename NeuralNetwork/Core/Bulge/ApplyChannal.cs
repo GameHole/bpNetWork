@@ -21,7 +21,7 @@ namespace NeuralNetwork
         {
             throw new NotImplementedException();
         }
-        protected override void ActiveSelf()
+        public override void ActiveSelf()
         {
             bulge.weight += counting.GetValue();
         }

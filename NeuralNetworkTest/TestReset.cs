@@ -12,7 +12,7 @@ namespace NeuralNetworkTest
         {
             var cell = new Cell();
             List<Bulge> bulges = new List<Bulge>();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 3; i++)
             {
                 var next = new Cell();
                 bulges.Add(cell.AddInput(next));
@@ -30,13 +30,34 @@ namespace NeuralNetworkTest
                 }
             }
             cell.Deactive();
+            int id = 0;
             foreach (var item in bulges)
             {
+                
                 foreach (var channal in item.units)
                 {
-                    Assert.IsFalse(channal.isActiveted);
+                    Assert.IsFalse(channal.isActiveted,$"channal:{channal} id:{id}");
                 }
+                id++;
             }
+        }
+        [Test]
+        public void testDeActiveOne()
+        {
+            var cells = new Cell[2];
+            for (int i = 0; i < cells.Length; i++)
+            {
+                var cel = new Cell();
+                cel.units.Clear();
+                cel.units.AddUnit<LogUnit>();
+                cells[i] = cel;
+            }
+            var bu = cells[0].AddInput(cells[1]);
+            var log = bu.units.GetUnit<LogChannal>();
+            cells[0].units.GetUnit<LogUnit>().Active();
+            Assert.IsTrue(log.isActiveted);
+            cells[0].Deactive();
+            Assert.IsFalse(log.isActiveted);
         }
     }
 }

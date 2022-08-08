@@ -17,7 +17,7 @@ namespace NeuralNetwork
         {
             var channal = bulge.units.AddUnit<T>();
             var cell = from as ACellUnit<T>;
-            channal.Link(from, this);
+            bulge.Link(from.cell, this.cell);
             cell.outputs.Add(channal);
             inputs.Add(channal);
         }
@@ -62,7 +62,7 @@ namespace NeuralNetwork
         {
             foreach (var item in bulges)
             {
-                item.Active(this);
+                item.Active(this.cell);
             }
         }
         protected abstract void ActiveSelf();

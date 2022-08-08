@@ -13,14 +13,14 @@
         }
         public CountingChannal counting;
         public double deltaWeigth;
-        private TranningCellUnit To => to as TranningCellUnit;
-        protected override void ActiveSelf()
+        private TranningCellUnit To => bulge.to.units.GetUnit<TranningCellUnit>();
+        public override void ActiveSelf()
         {
-            deltaWeigth = getToDeltaBias() * from.cell.value;
+            deltaWeigth = getToDeltaBias() * bulge.from.value;
             counting.Count(deltaWeigth);
         }
 
-        protected override bool activeInverse => true;
+        internal override bool activeInverse => true;
 
 
         private double getToDeltaBias()
