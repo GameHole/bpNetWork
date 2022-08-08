@@ -12,22 +12,39 @@ namespace NeuralNetworkTest
         public void SetUp()
         {
             cell = new Cell();
-            cell.active.bias = 1;
+            cell.units.GetUnit<ActiveCellUnit>().bias = 1;
             actviter = new Actviter();
         }
         [Test]
         public void testCell()
         {
-            Assert.AreEqual(1, cell.active.bias);
-            Assert.AreEqual(0, cell.inputs.Count);
-            Assert.AreEqual(0,cell.outputs.Count);
+            Assert.AreEqual(1, cell.units.GetUnit<ActiveCellUnit>().bias);
+        }
+        [Test]
+        public void testAddInput()
+        {
+            var value = new ValueCell() { value = 1.5f };
+            var bulge = cell.AddInput(value);
+            var act = bulge.units.GetUnit<ActiveChannal>();
+            Assert.NotNull(act);
+            Assert.AreSame(value,act.from.cell);
+            Assert.AreSame(cell,act.to.cell);
         }
         [Test]
         public void testInitCell()
         {
             cell = new Cell();
-            Assert.GreaterOrEqual(cell.active.bias,0);
-            Assert.LessOrEqual(cell.active.bias, 1);
+            Assert.GreaterOrEqual(cell.units.GetUnit<ActiveCellUnit>().bias,0);
+            Assert.LessOrEqual(cell.units.GetUnit<ActiveCellUnit>().bias, 1);
+        }
+        [Test]
+        public void testCellUnit()
+        {
+            cell.units.Clear();
+            var unit = cell.units.AddUnit<LogUnit>();
+            var getted = cell.units.GetUnit(unit.ChannalType);
+            Assert.NotNull(getted);
+            Assert.AreSame(unit, getted);
         }
         [Test]
         public void testIntegration()
@@ -39,7 +56,9 @@ namespace NeuralNetworkTest
                 bulg.weight = 0.1 * idx;
             }
             var integration = 1 * 0.1 + 2 * 0.2 + 3 * 0.3 + 1;
-            cell.active.Active();
+            var act = cell.units.GetUnit<ActiveCellUnit>();
+            Assert.AreEqual(integration, act.integrate(), 1e-5);
+            act.Active();
             Assert.AreEqual(actviter.Actvite(integration), cell.value, 1e-5);
         }
     }

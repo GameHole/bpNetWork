@@ -4,17 +4,12 @@ namespace NeuralNetwork
 {
     public abstract class AChannal
     {
-        protected Bulge bulge;
-        protected Cell from;
-        protected Cell to;
-        public void Init(Bulge bulge, Cell from, Cell to)
-        {
-            this.bulge = bulge;
-            this.from = from;
-            this.to = to;
-        }
+        public virtual Bulge bulge { get; set; }
+        public ICellUnit from { get; private set; }
+        public ICellUnit to { get; private set; }
+        protected virtual bool activeInverse => false;
         public bool isActiveted { get; private set; }
-        public void Active(Cell cell)
+        public void Active(ICellUnit cell)
         {
             if (isActiveted) return;
             isActiveted = true;
@@ -22,14 +17,28 @@ namespace NeuralNetwork
         }
        
         protected virtual void ActiveSelf() { }
-        protected void ActiveCell(Cell caller, Cell cell)
+
+        public void Link(ICellUnit from, ICellUnit to)
+        {
+            this.from = from;
+            this.to = to;
+        }
+
+        protected void ActiveCell(ICellUnit caller, ICellUnit cell)
         {
             if (caller != cell)
-                getCellChannal(cell)?.Active();
+                cell.Active();
         }
         
-        protected void ActiveInternal(Cell cell)
+        protected void ActiveInternal(ICellUnit cell)
         {
+            var fromCell = from;
+            var toCell = to;
+            if (activeInverse)
+            {
+                fromCell = to;
+                toCell = from;
+            }
             ActiveCell(cell, fromCell);
             ActiveSelf();
             ActiveCell(cell, toCell);
@@ -45,9 +54,6 @@ namespace NeuralNetwork
             from.Deactive();
             to.Deactive();
         }
-        protected abstract ACellChannal getCellChannal(Cell cell);
-        protected virtual Cell fromCell => from;
-        protected virtual Cell toCell => to;
         public abstract double GetValue();
         
     }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace NeuralNetwork
@@ -6,30 +7,24 @@ namespace NeuralNetwork
     public class Cell
     {
         public double value;
-        public List<Bulge> inputs { get; private set; } = new List<Bulge>();
-        public List<Bulge> outputs { get; private set; } = new List<Bulge>();
+        public CellUnitContainer units { get; protected set; }
         public virtual Bulge AddInput(Cell cell)
         {
-            var bulge = new Bulge(cell, this);
-            cell.outputs.Add(bulge);
-            inputs.Add(bulge);
+            var bulge = new Bulge();
+            foreach (var item in units)
+            {
+                var unit = cell.units.GetUnit(item.ChannalType);
+                if (unit != null)
+                {
+                    item.AddFrom(unit, bulge);
+                }
+            }
             return bulge;
         }
 
-        internal void ActiveBulges(List<Bulge> bulges)
-        {
-            foreach (var item in bulges)
-            {
-                item.active.Active(this);
-            }
-        }
         public void Deactive()
         {
-            foreach (var item in inputs)
-            {
-                item.Deactive();
-            }
-            foreach (var item in outputs)
+            foreach (var item in units)
             {
                 item.Deactive();
             }
@@ -38,16 +33,11 @@ namespace NeuralNetwork
         internal Actviter actviter = new Actviter();
         public Cell()
         {
-            active = new ActiveCellChannal() { cell = this };
-            counting = new CountingCellChannal() { cell = this };
-            tranning = new TranningCellChannal() { cell = this, act = active, countting = counting };
-            apply = new ApplyCellChannal() { cell = this };
+            units = new CellUnitContainer(this);
+            units.AddUnit<ActiveCellUnit>();
+            units.AddUnit<CountingCellUnit>();
+            units.AddUnit<TranningCellUnit>();
+            units.AddUnit<ApplyCellUnit>();
         }
-
-        public ActiveCellChannal active;
-        public TranningCellChannal tranning;
-        public ApplyCellChannal apply;
-        public CountingCellChannal counting;
-       
     }
 }

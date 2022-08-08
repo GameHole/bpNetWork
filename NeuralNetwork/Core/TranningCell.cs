@@ -5,36 +5,45 @@ namespace NeuralNetwork
 {
     public class TranningCell:Cell
     {
+        private Bulge input;
         public TranningCell()
         {
-            tranning = new NoneTranningChannal();
+            units = new CellUnitContainer(this);
+            units.AddUnit<InputActiveCellUnit>();
+            units.AddUnit<NoneTranningUnit>();
+            units.AddUnit<ApplyCellUnit>();
+            units.AddUnit<CountingCellUnit>();
         }
+
+        
+
         public override Bulge AddInput(Cell cell)
         {
-            if (inputs.Count >= 1)
+            if (input!=null)
                 throw new TranningInputException("TranningCell can only one input cell");
-            return base.AddInput(cell);
+            var item = base.AddInput(cell);
+            input = item;
+            return item;
         }
 
         public void Reset()
         {
-            input.counting.Active(this);
+            units.GetUnit<CountingCellUnit>().Active();
         }
 
         public double ieta;
-        private Bulge input => inputs[0];
         public void Tran()
         {
-            input.Deactive();
-            input.active.Active(this);
+            Deactive();
+            units.GetUnit<InputActiveCellUnit>().Active();
             input.weight = 1;
-            tranning.deltaBias = ieta * (value - input.active.GetValue());
-            input.tranning.Active(this);
+            units.GetUnit<NoneTranningUnit>().deltaBias = ieta * (value - input.units.GetUnit<ActiveChannal>().GetValue());
+            units.GetUnit<NoneTranningUnit>().Active();
         }
 
         public void Apply()
         {
-            input.apply.Active(this);
+            units.GetUnit<ApplyCellUnit>().Active();
         }
     }
 }

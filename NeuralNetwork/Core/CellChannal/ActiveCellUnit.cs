@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NeuralNetwork
 {
-    public class ActiveCellChannal : ACellChannal
+    public class ActiveCellUnit : ACellUnit<ActiveChannal>
     {
         public event Action onActive;
         public double bias;
@@ -20,11 +20,6 @@ namespace NeuralNetwork
         public override double integrate()
         {
             return base.integrate() + bias;
-        }
-
-        protected override AChannal getChannal(Bulge item)
-        {
-            return item.active;
         }
     }
 }

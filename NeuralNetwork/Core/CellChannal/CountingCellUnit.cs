@@ -4,17 +4,12 @@ using System.Text;
 
 namespace NeuralNetwork
 {
-    public class CountingCellChannal : ACellChannal
+    public class CountingCellUnit : ACellUnit<CountingChannal>
     {
         public int tranCount;
         protected override void ActiveSelf()
         {
             tranCount = 0;
-        }
-
-        protected override AChannal getChannal(Bulge item)
-        {
-            return item.counting;
         }
     }
 }

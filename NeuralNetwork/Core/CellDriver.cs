@@ -4,7 +4,7 @@
     {
         public void Active(Cell cell)
         {
-            cell.active.Active();
+            cell.units.GetUnit<ActiveCellUnit>().Active();
         }
 
     }

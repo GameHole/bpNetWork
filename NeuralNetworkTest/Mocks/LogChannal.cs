@@ -19,8 +19,6 @@ namespace NeuralNetworkTest
             log += "active";
         }
 
-        protected override ACellChannal getCellChannal(Cell cell) => null;
-
         protected override void onDeactive()
         {
             log += "reset";

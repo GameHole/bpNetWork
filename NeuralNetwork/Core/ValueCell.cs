@@ -5,11 +5,13 @@ namespace NeuralNetwork
 {
     public class ValueCell : Cell
     {
-        public ValueCell():base()
+        public ValueCell()
         {
-            active = new InputActiveCellChannal { cell = this };
-            tranning = null;
-            apply = null;
+            units = new CellUnitContainer(this);
+            units.AddUnit<InputActiveCellUnit>();
+            units.AddUnit<NoneTranningUnit>();
+            units.AddUnit<CountingCellUnit>();
+            units.AddUnit<ApplyCellUnit>();
         }
     }
 }

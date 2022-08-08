@@ -12,8 +12,7 @@ namespace NeuralNetwork
         }
         protected override void ActiveSelf()
         {
-            bulge.weight += bulge.tranning.deltaWeigth;
+            bulge.weight += bulge.units.GetUnit<TranningChannal>().deltaWeigth;
         }
-        protected override ACellChannal getCellChannal(Cell cell) => cell.apply;
     }
 }

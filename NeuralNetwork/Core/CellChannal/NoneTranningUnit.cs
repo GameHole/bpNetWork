@@ -4,11 +4,10 @@ using System.Text;
 
 namespace NeuralNetwork
 {
-    class NoneTranningChannal:TranningCellChannal
+    public class NoneTranningUnit:TranningCellUnit
     {
-        public override void Active()
+        protected override void ActiveSelf()
         {
-          
         }
     }
 }

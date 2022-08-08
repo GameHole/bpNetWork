@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NeuralNetwork
 {
-    class InputActiveCellChannal : ActiveCellChannal
+    class InputActiveCellUnit : ActiveCellUnit
     {
         protected override void ActiveSelf()
         {

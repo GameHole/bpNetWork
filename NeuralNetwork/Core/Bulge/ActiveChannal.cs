@@ -2,10 +2,11 @@
 {
     public class ActiveChannal: AChannal
     {
-        protected override ACellChannal getCellChannal(Cell cell) => cell.active;
+
         public override double GetValue()
         {
-            return from.value * bulge. weight;
+            System.Console.WriteLine($"ActiveChannal:from {from.cell},to {to.cell},{from.cell.value},{to.cell.value}");
+            return from.cell.value * bulge.weight;
         }
     }
 }

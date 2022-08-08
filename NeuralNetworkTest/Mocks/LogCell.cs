@@ -9,7 +9,7 @@ namespace NeuralNetworkTest
 
         public LogCell(Cell cell)
         {
-            cell.active.onActive += () =>
+            cell.units.GetUnit<ActiveCellUnit>().onActive += () =>
             {
                 log += "active ";
             };

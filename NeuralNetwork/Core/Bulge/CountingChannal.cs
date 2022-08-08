@@ -12,10 +12,6 @@ namespace NeuralNetwork
             throw new NotImplementedException();
         }
 
-        protected override ACellChannal getCellChannal(Cell cell)
-        {
-            return cell.counting;
-        }
         protected override void ActiveSelf()
         {
             tranCount = 0;

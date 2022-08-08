@@ -8,7 +8,7 @@ namespace NeuralNetworkTest
     class TestReset
     {
         [Test]
-        public void TestBulgeReset()
+        public void TestBulgeDeactive()
         {
             var cell = new Cell();
             List<Bulge> bulges = new List<Bulge>();
@@ -18,21 +18,24 @@ namespace NeuralNetworkTest
                 bulges.Add(cell.AddInput(next));
                 cell = next;
             }
-            cell.active.Active();
-            cell.tranning.Active();
-            cell.apply.Active();
+            foreach (var item in cell.units)
+            {
+                item.Active();
+            }
             foreach (var item in bulges)
             {
-                Assert.IsTrue(item.active.isActiveted);
-                Assert.IsTrue(item.tranning.isActiveted);
-                Assert.IsTrue(item.apply.isActiveted);
+                foreach (var channal in item.units)
+                {
+                    Assert.IsTrue(channal.isActiveted);
+                }
             }
             cell.Deactive();
             foreach (var item in bulges)
             {
-                Assert.IsFalse(item.active.isActiveted);
-                Assert.IsFalse(item.tranning.isActiveted);
-                Assert.IsFalse(item.apply.isActiveted);
+                foreach (var channal in item.units)
+                {
+                    Assert.IsFalse(channal.isActiveted);
+                }
             }
         }
     }

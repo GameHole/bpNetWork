@@ -25,7 +25,7 @@ namespace NeuralNetworkTest
             for (int i = 0; i < cells.Length; i++)
             {
                 cells[i] = new Cell();
-                cells[i].active.bias = 1;
+                cells[i].units.GetUnit<ActiveCellUnit>().bias = 1;
             }
 
             return cells;
@@ -80,13 +80,13 @@ namespace NeuralNetworkTest
             var cells = makeCells(3);
             for (int i = 0; i < cells.Length; i++)
             {
-                cells[i].active.bias = 0;
+                cells[i].units.GetUnit<ActiveCellUnit>().bias = 0;
             }
             cells[2].AddInput(cells[0]);
             cells[2].AddInput(cells[1]);
-            foreach (var item in cells[2].inputs)
+            foreach (var item in cells[2].units.GetUnit<ActiveCellUnit>().inputs)
             {
-                item.weight = 1;
+                item.bulge.weight = 1;
             }
             AssertCells(cells[0], cells);
             var act = new Actviter();
