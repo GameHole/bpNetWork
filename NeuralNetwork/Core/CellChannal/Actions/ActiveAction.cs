@@ -6,6 +6,7 @@ namespace NeuralNetwork
 {
     public class ActiveAction : AUnitAction
     {
+        public Cell cell;
         public double bias;
         public override void ActiveSelf()
         {

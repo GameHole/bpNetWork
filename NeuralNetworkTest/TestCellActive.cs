@@ -8,14 +8,14 @@ namespace NeuralNetworkTest
 {
     class TestCellActive
     {
-        private Cell[] MakeCells(int count)
+        public static Cell[] MakeCells(int count)
         {
             var cells = new Cell[count];
             for (int i = 0; i < cells.Length; i++)
             {
                 var cell = new Cell();
                 cell.units.Clear();
-                cell.units.AddUnit<LogUnit>();
+                cell.units.AddUnit(new CellUnit<LogChannal, LogUnit>(new LogUnit()));
                 cells[i] = cell;
             }
             return cells;
@@ -31,7 +31,7 @@ namespace NeuralNetworkTest
             }
             for (int i = 0; i < cells.Length; i++)
             {
-                Assert.IsTrue(cells[i].units.GetUnit<LogUnit>().isActive);
+                Assert.IsTrue(cells[i].units.GetUnit<CellUnit<LogChannal, LogUnit>>().action.isActive);
             }
         }
 

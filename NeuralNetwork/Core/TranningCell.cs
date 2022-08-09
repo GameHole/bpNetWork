@@ -8,10 +8,10 @@ namespace NeuralNetwork
         private Bulge input;
         protected override void AddUnits()
         {
-            units.AddUnit<CellUnit<ActiveChannal,NoneUnitAction>>();
-            units.AddUnit<CellUnit<TranningChannal, TranningBasic>>();
-            units.AddUnit<CellUnit<ApplyChannal, NoneUnitAction>>();
-            units.AddUnit<CellUnit<CountingChannal, Counter>>();
+            units.AddUnit(new CellUnit<ActiveChannal, NoneUnitAction>(new NoneUnitAction()));
+            units.AddUnit(new CellUnit<TranningChannal, TranningBasic>(new TranningBasic()));
+            units.AddUnit(new CellUnit<ApplyChannal, NoneUnitAction>(new NoneUnitAction()));
+            units.AddUnit(new CellUnit<CountingChannal, Counter>(new Counter()));
         }
         public override Bulge AddInput(Cell cell)
         {

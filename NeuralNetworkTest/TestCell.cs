@@ -20,28 +20,7 @@ namespace NeuralNetworkTest
         {
             Assert.AreEqual(1, cell.units.GetUnit<CellUnit<ActiveChannal, ActiveAction>>().action.bias);
         }
-        [Test]
-        public void testSetUnitCell()
-        {
-            TestUnitCell(cell);
-        }
-        [Test]
-        public void testSetValueUnitCell()
-        {
-            TestUnitCell(new ValueCell());
-        }
-        [Test]
-        public void testSetTranningUnitCell()
-        {
-            TestUnitCell(new TranningCell());
-        }
-        private void TestUnitCell(Cell cell)
-        {
-            foreach (var item in cell.units)
-            {
-                Assert.AreSame(cell, item.cell);
-            }
-        }
+        
 
         [Test]
         public void testAddInput()
@@ -60,6 +39,15 @@ namespace NeuralNetworkTest
             Assert.AreSame(bulge, cell.inputs[0]);
         }
         [Test]
+        public void testMakeChannal()
+        {
+            var bulge = new Bulge();
+            cell.AddChannal(bulge, typeof(LogChannal));
+            var log = bulge.units.GetUnit<LogChannal>();
+            Assert.NotNull(log);
+            Assert.AreSame(bulge, log.bulge);
+        }
+        [Test]
         public void testInitCell()
         {
             cell = new Cell();
@@ -70,8 +58,9 @@ namespace NeuralNetworkTest
         public void testCellUnit()
         {
             cell.units.Clear();
-            var unit = cell.units.AddUnit<LogUnit>();
-            var getted = cell.units.GetUnit(unit.ChannalType);
+            var unit = new CellUnit<LogChannal, LogUnit>(new LogUnit());
+            cell.units.AddUnit(unit);
+            var getted = cell.units.GetUnit(typeof(LogChannal));
             Assert.NotNull(getted);
             Assert.AreSame(unit, getted);
         }

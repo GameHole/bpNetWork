@@ -43,14 +43,7 @@ namespace NeuralNetworkTest
         [Test]
         public void testLinkUnit()
         {
-            var cells = new Cell[2];
-            for (int i = 0; i < cells.Length; i++)
-            {
-                var cell = new Cell();
-                cell.units.Clear();
-                cell.units.AddUnit<LogUnit>();
-                cells[i] = cell;
-            }
+            var cells = TestCellActive.MakeCells(2);
             var bulge = cells[0].AddInput(cells[1]);
 
             Assert.NotNull(bulge.units.GetUnit<LogChannal>());

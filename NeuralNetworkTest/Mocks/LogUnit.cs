@@ -5,7 +5,7 @@ using System.Text;
 
 namespace NeuralNetworkTest
 {
-    class LogUnit : ACellUnit<LogChannal>
+    class LogUnit : AUnitAction
     {
         internal bool isActive;
 

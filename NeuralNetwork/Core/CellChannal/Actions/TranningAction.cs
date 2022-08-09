@@ -6,18 +6,9 @@ namespace NeuralNetwork
 {
     public class TranningAction:TranningBasic
     {
-        public override Cell cell
-        {
-            get => base.cell;
-            set
-            {
-                base.cell = value;
-                active = value.units.GetUnit<CellUnit<ActiveChannal, ActiveAction>>().action;
-                countting = value.units.GetUnit<CellUnit<CountingChannal, Counter>>().action;
-            }
-        }
-        private ActiveAction active;
-        private Counter countting;
+        public Cell cell;
+        public ActiveAction active;
+        public Counter countting;
 
         public override void ActiveSelf()
         {

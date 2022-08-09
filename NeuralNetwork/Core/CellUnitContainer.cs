@@ -4,9 +4,9 @@ using System.Text;
 
 namespace NeuralNetwork
 {
-    public class CellUnitContainer : Container<ICellUnit>
+    public class CellUnitContainer : Container<CellUnitBase>
     {
-        public T GetUnit<T>() where T:class,ICellUnit
+        public T GetUnit<T>() where T:CellUnitBase
         {
             return GetUnit(getChannalType(typeof(T))) as T;
         }
@@ -22,16 +22,14 @@ namespace NeuralNetwork
             return type;
         }
 
-        public ICellUnit GetUnit(Type channalType)
+        public CellUnitBase GetUnit(Type channalType)
         {
             return Get(channalType);
         }
 
-        public T AddUnit<T>() where T :class,ICellUnit, new()
+        public void AddUnit<T>(T item) where T :CellUnitBase
         {
-            var item = new T();
             Add(item.ChannalType, item);
-            return item;
         }
     }
 }

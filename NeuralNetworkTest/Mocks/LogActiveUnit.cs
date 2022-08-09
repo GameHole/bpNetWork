@@ -1,7 +1,7 @@
 ﻿using NeuralNetwork;
 namespace NeuralNetworkTest
 {
-    internal class LogActiveUnit:ACellUnit<ActiveChannal>
+    internal class LogActiveUnit:AUnitAction
     {
         internal string log;
 

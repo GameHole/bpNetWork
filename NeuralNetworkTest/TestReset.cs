@@ -44,17 +44,10 @@ namespace NeuralNetworkTest
         [Test]
         public void testDeActiveOne()
         {
-            var cells = new Cell[2];
-            for (int i = 0; i < cells.Length; i++)
-            {
-                var cel = new Cell();
-                cel.units.Clear();
-                cel.units.AddUnit<LogUnit>();
-                cells[i] = cel;
-            }
+            var cells = TestCellActive.MakeCells(2);
             var bu = cells[0].AddInput(cells[1]);
             var log = bu.units.GetUnit<LogChannal>();
-            cells[0].Active(cells[0].units.GetUnit<LogUnit>());
+            cells[0].Active(typeof(LogChannal));
             Assert.IsTrue(log.isActiveted);
             cells[0].Deactive();
             Assert.IsFalse(log.isActiveted);

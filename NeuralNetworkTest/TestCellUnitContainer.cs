@@ -9,40 +9,42 @@ namespace NeuralNetworkTest
     class TestCellUnitContainer
     {
         CellUnitContainer cntr;
-    
+        CellUnit<ActiveChannal, ActiveAction> unit;
         [SetUp]
         public void SetUp()
         {
             cntr = new CellUnitContainer();
+            unit = new CellUnit<ActiveChannal, ActiveAction>(new ActiveAction());
         }
         [Test]
         public void testGet()
         {
             Assert.AreEqual(0, cntr.Count);
-            var unit = cntr.AddUnit<LogUnit>();
-            Assert.AreSame(unit,cntr.GetUnit(typeof(LogChannal)));
-            Assert.AreSame(unit, cntr.GetUnit<LogUnit>());
+            cntr.AddUnit(unit);
+            Assert.AreEqual(1, cntr.Count);
+            Assert.AreSame(unit, cntr.GetUnit(typeof(ActiveChannal)));
+            Assert.AreSame(unit, cntr.GetUnit<CellUnit<ActiveChannal, ActiveAction>>());
         }
         [Test]
         public void testAddUnit()
         {
-            cntr.AddUnit<LogUnit>();
+            cntr.AddUnit(unit);
             Assert.AreEqual(1, cntr.Count);
         }
         [Test]
         public void testAddMore()
         {
-            var unit = cntr.AddUnit<LogUnit>();
+            cntr.AddUnit(unit);
             Assert.Throws<ArgumentException>(() =>
             {
-                cntr.AddUnit<LogUnit>();
+                cntr.AddUnit(new CellUnit<ActiveChannal, ActiveAction>(new ActiveAction()));
             });
             Assert.AreEqual(1, cntr.Count);
         }
-        [Test]
-        public void testGetChannalType()
-        {
-            Assert.AreSame(typeof(LogChannal), cntr.getChannalType(typeof(LogUnit)));
-        }
+        //[Test]
+        //public void testGetChannalType()
+        //{
+        //    Assert.AreSame(typeof(LogChannal), cntr.getChannalType(typeof(LogUnit)));
+        //}
     }
 }

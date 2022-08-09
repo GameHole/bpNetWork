@@ -15,14 +15,18 @@ namespace NeuralNetwork
             var bulge = new Bulge();
             foreach (var item in units)
             {
-                item.AddChannal(bulge);
+                AddChannal(bulge,item.ChannalType);
             }
             bulge.Link(cell, this);
             cell.outputs.Add(bulge);
             inputs.Add(bulge);
             return bulge;
         }
-        public virtual void Active(ICellUnit unit)
+        public void AddChannal(Bulge bulge,Type channalType)
+        {
+            bulge.units.AddUnit(channalType);
+        }
+        public virtual void Active(CellUnitBase unit)
         {
             var from = inputs;
             var to = outputs;
@@ -32,7 +36,7 @@ namespace NeuralNetwork
                 to = inputs;
             }
             ActiveBulges(from,unit.ChannalType);
-            unit.ActiveSelf();
+            unit.Action.ActiveSelf();
             ActiveBulges(to, unit.ChannalType);
         }
         public void Active(Type channalType)
@@ -55,7 +59,7 @@ namespace NeuralNetwork
                 DeactiveInternal(item);
             }
         }
-        private void DeactiveInternal(ICellUnit unit)
+        private void DeactiveInternal(CellUnitBase unit)
         {
             foreach (var item in inputs)
             {
@@ -71,25 +75,25 @@ namespace NeuralNetwork
         {
             units = new CellUnitContainer();
             AddUnits();
-            InitUnits();
+            
         }
 
         protected virtual void AddUnits()
         {
-            units.AddUnit<CellUnit<ActiveChannal, ActiveAction>>();
-            units.AddUnit<CellUnit<CountingChannal, Counter>>();
-            var unit = units.AddUnit<CellUnit<TranningChannal, TranningBasic>>();
-            unit._inverse = true;
-            unit.action = new TranningAction();
-            units.AddUnit<CellUnit<ApplyChannal, ApplyAction>>();
-        }
-
-        public void InitUnits()
-        {
-            foreach (var item in units)
-            {
-                item.cell = this;
-            }
+            var act = new ActiveAction();
+            var counter = new Counter();
+            var tran = new TranningAction();
+            var apply = new ApplyAction();
+            act.cell = this;
+            tran.cell = this;
+            apply.active = act;
+            apply.counting = counter;
+            tran.active = act;
+            tran.countting = counter;
+            units.AddUnit(new CellUnit<ActiveChannal, ActiveAction>(act));
+            units.AddUnit(new CellUnit<CountingChannal, Counter>(counter));
+            units.AddUnit(new CellUnit<TranningChannal, TranningBasic>(tran, true));
+            units.AddUnit(new CellUnit<ApplyChannal, ApplyAction>(apply));
         }
     }
 }

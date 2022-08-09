@@ -57,15 +57,15 @@ namespace NeuralNetworkTest
         {
             var tran = new TranningCell();
             var cell = new Cell();
-            var log = new LogActiveUnit();
-            log.cell = cell;
+            var log = new CellUnit<ActiveChannal, LogUnitAction>(new LogUnitAction());
+            
             cell.units.Set(typeof(ActiveChannal), log);
             var b = tran.AddInput(cell);
             for (int i = 0; i < 2; i++)
             {
                 tran.Tran();
             }
-            Assert.AreEqual("active active ", log.log);
+            Assert.AreEqual("active active ", log.action.log);
             Assert.AreEqual(2, b.units.GetUnit<CountingChannal>().counter.tranCount);
             Assert.AreEqual(2, cell.units.GetUnit<CellUnit<CountingChannal, Counter>>().action.tranCount);
         }
