@@ -4,11 +4,11 @@ using System.Text;
 
 namespace NeuralNetwork
 {
-    public class CellUnitContainer : Container<CellUnitBase>
+    public class CellUnitContainer : Container<CellUnit>
     {
-        public T GetUnit<T>() where T:CellUnitBase
+        public T GetUnit<C, T>() where C : AChannal where T : AUnitAction
         {
-            return GetUnit(getChannalType(typeof(T))) as T;
+            return GetUnit(typeof(C)).Action as T;
         }
 
         public Type getChannalType(Type type)
@@ -22,14 +22,22 @@ namespace NeuralNetwork
             return type;
         }
 
-        public CellUnitBase GetUnit(Type channalType)
+        public CellUnit GetUnit(Type channalType)
         {
             return Get(channalType);
         }
 
-        public void AddUnit<T>(T item) where T :CellUnitBase
+        public void AddUnit(CellUnit item)
         {
             Add(item.ChannalType, item);
+        }
+        public void AddUnit<T>(AUnitAction item, bool inverseDirection = false)
+        {
+            AddUnit(new CellUnit(typeof(T), item, inverseDirection));
+        }
+        public void AddUnit<T>()
+        {
+            AddUnit(new CellUnit(typeof(T)));
         }
     }
 }

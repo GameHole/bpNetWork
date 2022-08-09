@@ -14,17 +14,17 @@ namespace NeuralNetworkTest
         public void SetUp()
         {
             bulge = new Bulge();
-            cntr = new BulgeUnitContainer(bulge);
+            cntr = new BulgeUnitContainer();
         }
         [Test]
         public void testAddMore()
         {
             var log = cntr.AddUnit<LogChannal>();
             Assert.NotNull(log);
-            for (int i = 0; i < 2; i++)
+            Assert.Throws<ArgumentException>(() =>
             {
-                Assert.AreSame(log, cntr.AddUnit<LogChannal>());
-            }
+                cntr.AddUnit<LogChannal>();
+            });
             Assert.AreEqual(1, cntr.Count);
         }
         [Test]
@@ -39,7 +39,6 @@ namespace NeuralNetworkTest
         {
             var unit = cntr.AddUnit<LogChannal>();
             Assert.AreEqual(1, cntr.Count);
-            Assert.AreSame(unit.bulge, bulge);
         }
     }
 }

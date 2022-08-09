@@ -45,8 +45,9 @@ namespace NeuralNetworkTest
         {
             var cells = TestCellActive.MakeCells(2);
             var bulge = cells[0].AddInput(cells[1]);
-
-            Assert.NotNull(bulge.units.GetUnit<LogChannal>());
+            var log = bulge.units.GetUnit<LogChannal>();
+            Assert.NotNull(log);
+            Assert.AreSame(log.bulge, bulge);
         }
     }
 }

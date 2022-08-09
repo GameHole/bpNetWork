@@ -8,20 +8,19 @@
             set
             {
                 base.bulge = value;
-                counting = value.units.AddUnit<CountingChannal>();
+                counting = value.units.GetUnit<CountingChannal>().counter;
+                To = value.to.units.GetUnit<TranningChannal, TranningBasic>();
             }
         }
-        public CountingChannal counting;
+        public Counter counting;
+        private TranningBasic To;
+
         public double deltaWeigth;
-        private TranningBasic To => bulge.to.units.GetUnit<CellUnit<TranningChannal, TranningBasic>>().action;
         public override void ActiveSelf()
         {
             deltaWeigth = getToDeltaBias() * bulge.from.value;
-            counting.counter.Count(deltaWeigth);
+            counting.Count(deltaWeigth);
         }
-
-        internal override bool activeInverse => true;
-
 
         private double getToDeltaBias()
         {

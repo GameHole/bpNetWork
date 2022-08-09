@@ -9,15 +9,23 @@ namespace NeuralNetwork
         public double weight;
         public Cell from { get; set; }
         public Cell to { get; set; }
-        public BulgeUnitContainer units { get; }
-        public Bulge()
+        public BulgeUnitContainer units { get; } = new BulgeUnitContainer();
+        private void InitUnits(CellUnitContainer cntr)
         {
-            units = new BulgeUnitContainer(this);
+            foreach (var item in cntr)
+            {
+                units.AddUnit(item.ChannalType, item.activeInverse);
+            }
+            foreach (var item in units)
+            {
+                item.bulge = this;
+            }
         }
         public void Link(Cell from, Cell to)
         {
-           this.from = from;
-           this.to = to;
+            this.from = from;
+            this.to = to;
+            InitUnits(to.units);
         }
         public void Active(Cell cell, AChannal channal)
         {

@@ -6,32 +6,15 @@ namespace NeuralNetwork
 {
     public class BulgeUnitContainer : Container<AChannal>
     {
-        private Bulge bulge;
-        public BulgeUnitContainer(Bulge bulge)
-        {
-            this.bulge = bulge;
-        }
         public T AddUnit<T>() where T : AChannal, new()
         {
-            //var item = GetUnit<T>();
-            //if (item == null)
-            //{
-            //    item = new T();
-            //    Add(typeof(T), item);
-            //    item.bulge = bulge;
-            //}
-            //return item;
-            return AddUnit(typeof(T)) as T;
+            return AddUnit(typeof(T),false) as T;
         }
-        public AChannal AddUnit(Type channalType)
+        public AChannal AddUnit(Type channalType,bool activeInverse)
         {
-            var item = Get(channalType);
-            if (item == null)
-            {
-                item = Activator.CreateInstance(channalType) as AChannal;
-                Add(channalType, item);
-                item.bulge = bulge;
-            }
+            var item = Activator.CreateInstance(channalType) as AChannal;
+            item.activeInverse = activeInverse;
+            Add(channalType, item);
             return item;
         }
         public T GetUnit<T>() where T : AChannal

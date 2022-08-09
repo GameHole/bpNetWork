@@ -2,14 +2,13 @@
 
 namespace NeuralNetwork
 {
-    public abstract class AChannal
+    public class AChannal
     {
-        internal virtual bool activeInverse => false;
+        public bool activeInverse { get; set; }
         public virtual void ActiveSelf() { }
 
         public virtual Bulge bulge { get; set; }
-       
-        public bool isActiveted { get; internal set; }
 
+        public bool isActiveted { get; internal set; }
     }
 }

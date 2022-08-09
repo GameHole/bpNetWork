@@ -13,20 +13,12 @@ namespace NeuralNetwork
         public virtual Bulge AddInput(Cell cell)
         {
             var bulge = new Bulge();
-            foreach (var item in units)
-            {
-                AddChannal(bulge,item.ChannalType);
-            }
             bulge.Link(cell, this);
             cell.outputs.Add(bulge);
             inputs.Add(bulge);
             return bulge;
         }
-        public void AddChannal(Bulge bulge,Type channalType)
-        {
-            bulge.units.AddUnit(channalType);
-        }
-        public virtual void Active(CellUnitBase unit)
+        public virtual void Active(CellUnit unit)
         {
             var from = inputs;
             var to = outputs;
@@ -59,7 +51,7 @@ namespace NeuralNetwork
                 DeactiveInternal(item);
             }
         }
-        private void DeactiveInternal(CellUnitBase unit)
+        private void DeactiveInternal(CellUnit unit)
         {
             foreach (var item in inputs)
             {
@@ -90,10 +82,10 @@ namespace NeuralNetwork
             apply.counting = counter;
             tran.active = act;
             tran.countting = counter;
-            units.AddUnit(new CellUnit<ActiveChannal, ActiveAction>(act));
-            units.AddUnit(new CellUnit<CountingChannal, Counter>(counter));
-            units.AddUnit(new CellUnit<TranningChannal, TranningBasic>(tran, true));
-            units.AddUnit(new CellUnit<ApplyChannal, ApplyAction>(apply));
+            units.AddUnit<ActiveChannal>(act);
+            units.AddUnit<CountingChannal>(counter);
+            units.AddUnit<TranningChannal>(tran, true);
+            units.AddUnit<ApplyChannal>(apply);
         }
     }
 }

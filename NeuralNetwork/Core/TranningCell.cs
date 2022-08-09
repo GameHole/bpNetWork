@@ -8,15 +8,15 @@ namespace NeuralNetwork
         private Bulge input;
         protected override void AddUnits()
         {
-            units.AddUnit(new CellUnit<ActiveChannal, NoneUnitAction>(new NoneUnitAction()));
-            units.AddUnit(new CellUnit<TranningChannal, TranningBasic>(new TranningBasic()));
-            units.AddUnit(new CellUnit<ApplyChannal, NoneUnitAction>(new NoneUnitAction()));
-            units.AddUnit(new CellUnit<CountingChannal, Counter>(new Counter()));
+            units.AddUnit<ActiveChannal>();
+            units.AddUnit<TranningChannal>(new TranningBasic());
+            units.AddUnit<ApplyChannal>();
+            units.AddUnit<CountingChannal>();
         }
         public override Bulge AddInput(Cell cell)
         {
-            if (input!=null)
-                throw new TranningInputException("TranningCell can only one input cell");
+            if (input != null)
+                throw new TranningException("TranningCell can only one input cell");
             var item = base.AddInput(cell);
             input = item;
             return item;
@@ -28,12 +28,16 @@ namespace NeuralNetwork
         }
 
         public double ieta;
+
+        public double difference { get;private set; }
+
         public void Tran()
         {
             Deactive();
-            input.Active(this, typeof(ActiveChannal));
+            Active(typeof(ActiveChannal));
             input.weight = 1;
-            units.GetUnit<CellUnit<TranningChannal, TranningBasic>>().action.deltaBias = ieta * (value - input.units.GetUnit<ActiveChannal>().GetValue());
+            difference = value - input.from.value;
+            units.GetUnit<TranningChannal, TranningBasic>().deltaBias = ieta * difference;
             Active(typeof(TranningChannal));
         }
 

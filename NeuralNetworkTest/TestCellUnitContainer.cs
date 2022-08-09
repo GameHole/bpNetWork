@@ -9,12 +9,12 @@ namespace NeuralNetworkTest
     class TestCellUnitContainer
     {
         CellUnitContainer cntr;
-        CellUnit<ActiveChannal, ActiveAction> unit;
+        CellUnit unit;
         [SetUp]
         public void SetUp()
         {
             cntr = new CellUnitContainer();
-            unit = new CellUnit<ActiveChannal, ActiveAction>(new ActiveAction());
+            unit = new CellUnit(typeof(ActiveChannal),new ActiveAction());
         }
         [Test]
         public void testGet()
@@ -23,7 +23,7 @@ namespace NeuralNetworkTest
             cntr.AddUnit(unit);
             Assert.AreEqual(1, cntr.Count);
             Assert.AreSame(unit, cntr.GetUnit(typeof(ActiveChannal)));
-            Assert.AreSame(unit, cntr.GetUnit<CellUnit<ActiveChannal, ActiveAction>>());
+            Assert.AreSame(unit.Action, cntr.GetUnit<ActiveChannal, ActiveAction>());
         }
         [Test]
         public void testAddUnit()
@@ -37,7 +37,7 @@ namespace NeuralNetworkTest
             cntr.AddUnit(unit);
             Assert.Throws<ArgumentException>(() =>
             {
-                cntr.AddUnit(new CellUnit<ActiveChannal, ActiveAction>(new ActiveAction()));
+                cntr.AddUnit(unit);
             });
             Assert.AreEqual(1, cntr.Count);
         }

@@ -12,7 +12,7 @@ namespace NeuralNetwork
             set
             {
                 base.bulge = value;
-                counting = value.units.AddUnit<CountingChannal>();
+                counting = value.units.GetUnit<CountingChannal>();
             }
         }
         public CountingChannal counting;

@@ -6,8 +6,6 @@ namespace NeuralNetwork
 {
     class NoneUnitAction : AUnitAction
     {
-        public override void ActiveSelf()
-        {
-        }
+        public override void ActiveSelf() { }
     }
 }

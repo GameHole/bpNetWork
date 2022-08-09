@@ -6,17 +6,15 @@ using System.Text;
 
 namespace NeuralNetworkTest
 {
-    internal class TestClass : CellUnitBase
-    {
-       
-    }
     class TestContainer
     {
-        Container<CellUnitBase> cntr;
+        Container<object> cntr;
+        object log;
         [SetUp]
         public void SetUp()
         {
-            cntr = new Container<CellUnitBase>();
+            cntr = new Container<object>();
+            log = new object();
         }
         [Test]
         public void testContainer()
@@ -26,7 +24,6 @@ namespace NeuralNetworkTest
         [Test]
         public void testGet()
         {
-            var log = new TestClass();
             cntr.Add(typeof(LogUnit), log);
             Assert.NotNull(cntr.Get(typeof(LogUnit)));
             Assert.AreSame(log, cntr.Get(typeof(LogUnit)));
@@ -35,14 +32,12 @@ namespace NeuralNetworkTest
         [Test]
         public void testAdd()
         {
-            var log = new TestClass();
             cntr.Add(typeof(TestTraining), log);
             Assert.AreSame(log, cntr.Get(typeof(TestTraining)));
         }
         [Test]
         public void testClear()
         {
-            cntr.Add(typeof(LogUnit),new TestClass());
             cntr.Clear();
             Assert.AreEqual(0, cntr.Count);
             Assert.Null(cntr.Get(typeof(LogUnit)));

@@ -16,7 +16,7 @@ namespace NeuralNetworkTest
             channal = new LogChannal();
             bulge = new Bulge();
             var cell = new Cell();
-            cell.units.AddUnit(new CellUnit<LogChannal, LogUnit>(new LogUnit()));
+            cell.units.AddUnit(new CellUnit(typeof(LogChannal), new LogUnit()));
             bulge.from = cell;
             bulge.to = cell;
             channal.bulge = bulge;

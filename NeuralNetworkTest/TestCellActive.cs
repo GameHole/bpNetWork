@@ -15,7 +15,7 @@ namespace NeuralNetworkTest
             {
                 var cell = new Cell();
                 cell.units.Clear();
-                cell.units.AddUnit(new CellUnit<LogChannal, LogUnit>(new LogUnit()));
+                cell.units.AddUnit(TestCell.NewLogUnit());
                 cells[i] = cell;
             }
             return cells;
@@ -31,7 +31,7 @@ namespace NeuralNetworkTest
             }
             for (int i = 0; i < cells.Length; i++)
             {
-                Assert.IsTrue(cells[i].units.GetUnit<CellUnit<LogChannal, LogUnit>>().action.isActive);
+                Assert.IsTrue(cells[i].units.GetUnit<LogChannal, LogUnit>().isActive);
             }
         }
 
