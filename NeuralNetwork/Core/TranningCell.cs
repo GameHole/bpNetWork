@@ -6,17 +6,13 @@ namespace NeuralNetwork
     public class TranningCell:Cell
     {
         private Bulge input;
-        public TranningCell()
+        protected override void AddUnits()
         {
-            units = new CellUnitContainer(this);
             units.AddUnit<InputActiveCellUnit>();
             units.AddUnit<NoneTranningUnit>();
-            units.AddUnit<ApplyCellUnit>();
+            units.AddUnit<NoneApplyUnit>();
             units.AddUnit<CountingCellUnit>();
         }
-
-        
-
         public override Bulge AddInput(Cell cell)
         {
             if (input!=null)
@@ -35,7 +31,7 @@ namespace NeuralNetwork
         public void Tran()
         {
             Deactive();
-            Active(units.GetUnit<InputActiveCellUnit>());
+            input.Active(this, typeof(ActiveChannal));
             input.weight = 1;
             units.GetUnit<NoneTranningUnit>().deltaBias = ieta * (value - input.units.GetUnit<ActiveChannal>().GetValue());
             Active(units.GetUnit<NoneTranningUnit>());
@@ -43,7 +39,7 @@ namespace NeuralNetwork
 
         public void Apply()
         {
-            Active(units.GetUnit<ApplyCellUnit>());
+            Active(typeof(ApplyChannal));
         }
     }
 }

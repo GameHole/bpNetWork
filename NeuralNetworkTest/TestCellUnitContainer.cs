@@ -9,12 +9,11 @@ namespace NeuralNetworkTest
     class TestCellUnitContainer
     {
         CellUnitContainer cntr;
-        Cell cell;
+    
         [SetUp]
         public void SetUp()
         {
-            cell = new Cell();
-            cntr = new CellUnitContainer(cell);
+            cntr = new CellUnitContainer();
         }
         [Test]
         public void testGet()
@@ -27,19 +26,23 @@ namespace NeuralNetworkTest
         [Test]
         public void testAddUnit()
         {
-            var unit = cntr.AddUnit<LogUnit>();
+            cntr.AddUnit<LogUnit>();
             Assert.AreEqual(1, cntr.Count);
-            Assert.AreSame(unit.cell, cell);
         }
         [Test]
         public void testAddMore()
         {
-            var unit = cntr.AddUnit<LogUnit>();         
-            for (int i = 0; i < 2; i++)
+            var unit = cntr.AddUnit<LogUnit>();
+            Assert.Throws<ArgumentException>(() =>
             {
-                Assert.AreSame(unit, cntr.AddUnit<LogUnit>());
-            }
+                cntr.AddUnit<LogUnit>();
+            });
             Assert.AreEqual(1, cntr.Count);
+        }
+        [Test]
+        public void testGetChannalType()
+        {
+            Assert.AreSame(typeof(LogChannal), cntr.getChannalType(typeof(LogUnit)));
         }
     }
 }

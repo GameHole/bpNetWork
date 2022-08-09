@@ -4,11 +4,10 @@ using System.Text;
 
 namespace NeuralNetwork
 {
-    class InputActiveCellUnit : ACellUnit<ActiveChannal>
+    class NoneApplyUnit : ACellUnit<ApplyChannal>
     {
         public override void ActiveSelf()
         {
-            
         }
     }
 }

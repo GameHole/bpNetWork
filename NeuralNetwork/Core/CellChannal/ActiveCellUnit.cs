@@ -6,12 +6,10 @@ namespace NeuralNetwork
 {
     public class ActiveCellUnit : ACellUnit<ActiveChannal>
     {
-        public event Action onActive;
         public double bias;
         public override void ActiveSelf()
         {
             cell.value = cell.actviter.Actvite(integrate());
-            onActive?.Invoke();
         }
         public double integrate()
         {

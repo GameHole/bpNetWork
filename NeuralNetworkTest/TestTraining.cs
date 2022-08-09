@@ -57,7 +57,9 @@ namespace NeuralNetworkTest
         {
             var tran = new TranningCell();
             var cell = new Cell();
-            var log = new LogCell(cell);
+            var log = new LogActiveUnit();
+            log.cell = cell;
+            cell.units.Set(typeof(ActiveChannal), log);
             var b = tran.AddInput(cell);
             for (int i = 0; i < 2; i++)
             {

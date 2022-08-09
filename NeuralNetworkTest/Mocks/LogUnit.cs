@@ -7,9 +7,11 @@ namespace NeuralNetworkTest
 {
     class LogUnit : ACellUnit<LogChannal>
     {
+        internal bool isActive;
+
         public override void ActiveSelf()
         {
-           
+            isActive = true;
         }
     }
 }

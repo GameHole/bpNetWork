@@ -21,6 +21,29 @@ namespace NeuralNetworkTest
             Assert.AreEqual(1, cell.units.GetUnit<ActiveCellUnit>().bias);
         }
         [Test]
+        public void testSetUnitCell()
+        {
+            TestUnitCell(cell);
+        }
+        [Test]
+        public void testSetValueUnitCell()
+        {
+            TestUnitCell(new ValueCell());
+        }
+        [Test]
+        public void testSetTranningUnitCell()
+        {
+            TestUnitCell(new TranningCell());
+        }
+        private void TestUnitCell(Cell cell)
+        {
+            foreach (var item in cell.units)
+            {
+                Assert.AreSame(cell, item.cell);
+            }
+        }
+
+        [Test]
         public void testAddInput()
         {
             var value = new ValueCell() { value = 1.5f };

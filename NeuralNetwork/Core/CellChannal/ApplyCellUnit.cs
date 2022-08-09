@@ -12,8 +12,8 @@ namespace NeuralNetwork
             set
             {
                 base.cell = value;
-                active = value.units.AddUnit<ActiveCellUnit>();
-                counting = value.units.AddUnit<CountingCellUnit>();
+                active = value.units.GetUnit<ActiveCellUnit>();
+                counting = value.units.GetUnit<CountingCellUnit>();
             }
         }
 

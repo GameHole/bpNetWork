@@ -8,89 +8,67 @@ namespace NeuralNetworkTest
 {
     class TestCellActive
     {
-        private CellDriver activator = new CellDriver();
-        private void AssertCells(Cell input, Cell[] cells)
-        {
-            var logs = decCells(cells);
-            activator.Active(input);
-            for (int i = 0; i < logs.Length; i++)
-            {
-                Assert.AreEqual("active ",logs[i].log, $"index = {i}");
-            }
-        }
-
-        private Cell[] makeCells(int count)
+        private Cell[] MakeCells(int count)
         {
             var cells = new Cell[count];
             for (int i = 0; i < cells.Length; i++)
             {
-                cells[i] = new Cell();
-                cells[i].units.GetUnit<ActiveCellUnit>().bias = 1;
+                var cell = new Cell();
+                cell.units.Clear();
+                cell.units.AddUnit<LogUnit>();
+                cells[i] = cell;
             }
-
             return cells;
         }
-        private LogCell[] decCells(Cell[] cells)
+
+        private void AssertActive(Cell[] cells, List<Bulge> bulges)
         {
-            var logs = new LogCell[cells.Length];
+            Assert.Greater(bulges.Count, 0);
+            cells[0].Active(typeof(LogChannal));
+            for (int i = 0; i < bulges.Count; i++)
+            {
+                Assert.IsTrue(bulges[i].units.GetUnit<LogChannal>().isActiveted,$"id = {i}");
+            }
             for (int i = 0; i < cells.Length; i++)
             {
-                logs[i] = new LogCell(cells[i]);
+                Assert.IsTrue(cells[i].units.GetUnit<LogUnit>().isActive);
             }
-            return logs;
         }
 
-        [Test]
-        public void testValueToCell()
-        {
-            var input = new ValueCell();
-            var cells = makeCells(2);
-            for (int i = 0; i < cells.Length; i++)
-            {
-                cells[i].AddInput(input);
-            }
-            AssertCells(input, cells);
-        }
-
-        [Test]
-        public void testCellToValue()
-        {
-            var cell = new Cell();
-            var cells = new Cell[2];
-            for (int i = 0; i < cells.Length; i++)
-            {
-                cells[i] = new Cell();
-                cell.AddInput(cells[i]);
-            }
-            AssertCells(cells[0], cells);
-        }
         [Test]
         public void testCellToCell()
         {
-            Cell[] cells = makeCells(3);
+            var cells = MakeCells(10);
+            var bulges = new List<Bulge>();
+            for (int i = 0; i < cells.Length-1; i++)
+            {
+                bulges.Add(cells[i+1].AddInput(cells[i]));
+            }
+            AssertActive(cells, bulges);
+        }
+
+        [Test]
+        public void testMutiInput()
+        {
+            var cells = MakeCells(3);
+            var bulges = new List<Bulge>();
             for (int i = 1; i < cells.Length; i++)
             {
-                cells[i].AddInput(cells[0]);
+                bulges.Add(cells[0].AddInput(cells[i]));
             }
-            AssertCells(cells[0], cells);
+            AssertActive(cells, bulges);
         }
+
         [Test]
-        public void testCellToCellResult()
+        public void testMutiOutput()
         {
-            var cells = makeCells(3);
-            for (int i = 0; i < cells.Length; i++)
+            var cells = MakeCells(3);
+            var bulges = new List<Bulge>();
+            for (int i = 1; i < cells.Length; i++)
             {
-                cells[i].units.GetUnit<ActiveCellUnit>().bias = 0;
+                bulges.Add(cells[i].AddInput(cells[0]));
             }
-            cells[2].AddInput(cells[0]);
-            cells[2].AddInput(cells[1]);
-            foreach (var item in cells[2].inputs)
-            {
-                item.weight = 1;
-            }
-            AssertCells(cells[0], cells);
-            var act = new Actviter();
-            Assert.AreEqual(act.Actvite((1 * 0.5) * 2), cells[2].value);
+            AssertActive(cells, bulges);
         }
     }
 }

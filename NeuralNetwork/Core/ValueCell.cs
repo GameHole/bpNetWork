@@ -5,13 +5,9 @@ namespace NeuralNetwork
 {
     public class ValueCell : Cell
     {
-        public ValueCell()
+        protected override void AddUnits()
         {
-            units = new CellUnitContainer(this);
             units.AddUnit<InputActiveCellUnit>();
-            units.AddUnit<NoneTranningUnit>();
-            units.AddUnit<CountingCellUnit>();
-            units.AddUnit<ApplyCellUnit>();
         }
     }
 }

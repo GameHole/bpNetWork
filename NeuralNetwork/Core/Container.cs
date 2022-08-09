@@ -7,7 +7,7 @@ namespace NeuralNetwork
 {
     public class Container<T>:IEnumerable<T>
     {
-        private Dictionary<Type, T> units = new Dictionary<Type, T>();
+        protected Dictionary<Type, T> units = new Dictionary<Type, T>();
 
         public int Count => units.Count;
 
@@ -31,6 +31,10 @@ namespace NeuralNetwork
         public void Clear()
         {
             units.Clear();
+        }
+        public void Set(Type type, T unit)
+        {
+            units[type] = unit;
         }
     }
 }

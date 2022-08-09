@@ -31,7 +31,7 @@ namespace NeuralNetwork
         }
         private void ActiveCell(Cell caller, Cell cell, AChannal channal)
         {
-            if (caller != cell)
+            if (cell != null && caller != cell)
                 cell.Active(channal.GetType());
         }
         internal void ActiveInternal(Cell cell,AChannal channal)

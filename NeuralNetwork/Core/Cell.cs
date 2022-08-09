@@ -15,18 +15,14 @@ namespace NeuralNetwork
             var bulge = new Bulge();
             foreach (var item in units)
             {
-                var unit = cell.units.GetUnit(item.ChannalType);
-                if (unit != null)
-                {
-                    item.AddChannal(bulge);
-                }
+                item.AddChannal(bulge);
             }
             bulge.Link(cell, this);
             cell.outputs.Add(bulge);
             inputs.Add(bulge);
             return bulge;
         }
-        public void Active(ICellUnit unit)
+        public virtual void Active(ICellUnit unit)
         {
             var from = inputs;
             var to = outputs;
@@ -39,9 +35,11 @@ namespace NeuralNetwork
             unit.ActiveSelf();
             ActiveBulges(to, unit.ChannalType);
         }
-        internal void Active(Type channalType)
+        public void Active(Type channalType)
         {
-            Active(units.Get(channalType));
+            var unit = units.Get(channalType);
+            if (unit != null)
+                Active(unit);
         }
         private void ActiveBulges(List<Bulge> bulges, Type channalType)
         {
@@ -71,11 +69,25 @@ namespace NeuralNetwork
         internal Actviter actviter = new Actviter();
         public Cell()
         {
-            units = new CellUnitContainer(this);
+            units = new CellUnitContainer();
+            AddUnits();
+            InitUnits();
+        }
+
+        protected virtual void AddUnits()
+        {
             units.AddUnit<ActiveCellUnit>();
             units.AddUnit<CountingCellUnit>();
             units.AddUnit<TranningCellUnit>();
             units.AddUnit<ApplyCellUnit>();
+        }
+
+        public void InitUnits()
+        {
+            foreach (var item in units)
+            {
+                item.cell = this;
+            }
         }
     }
 }
