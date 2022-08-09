@@ -14,7 +14,7 @@ namespace NeuralNetworkTest
             var actor = new Actviter();
             var inputBulgess = new Bulge[2];
             var cell = new Cell();
-            cell.units.GetUnit<ActiveCellUnit>().bias = 1;
+            cell.units.GetUnit<CellUnit<ActiveChannal, ActiveAction>>().action.bias = 1;
             var tranOut = new TranningCell();
             double integration = 0;
             for (int i = 0; i < inputBulgess.Length; i++)
@@ -34,11 +34,11 @@ namespace NeuralNetworkTest
             var LossToVHatDerivative = 0.8 * (1 - cellValue);
             var LossToCellBeiasDerivative = 1;
             var celDeltaBeias = LossToVHatDerivative * LossToCellBeiasDerivative * actor.Derivative(integration);
-            Assert.AreEqual(LossToVHatDerivative, tranOut.units.GetUnit<TranningCellUnit>().deltaBias, 1e-5);
+            Assert.AreEqual(LossToVHatDerivative, tranOut.units.GetUnit<CellUnit<TranningChannal, TranningBasic>>().action.deltaBias, 1e-5);
             Assert.AreEqual(1, tranBulge.weight);
             //Assert.AreEqual(integration, cell.integrate());
             Assert.AreEqual(cellValue, cell.value, 1e-5);
-            Assert.AreEqual(celDeltaBeias, cell.units.GetUnit<TranningCellUnit>().deltaBias);
+            Assert.AreEqual(celDeltaBeias, cell.units.GetUnit<CellUnit<TranningChannal, TranningBasic>>().action.deltaBias);
 
             for (int i = 0; i < inputBulgess.Length; i++)
             {
@@ -46,7 +46,7 @@ namespace NeuralNetworkTest
                 Assert.AreEqual(celDeltaBeias * fromValue, inputBulgess[i].units.GetUnit<TranningChannal>().deltaWeigth, 1e-5, $"i = {i}");
             }
             tranOut.Apply();
-            Assert.AreEqual(1 + celDeltaBeias, cell.units.GetUnit<ActiveCellUnit>().bias);
+            Assert.AreEqual(1 + celDeltaBeias, cell.units.GetUnit<CellUnit<ActiveChannal, ActiveAction>>().action.bias);
             for (int i = 0; i < inputBulgess.Length; i++)
             {
                 Assert.AreEqual(0.5 + inputBulgess[i].units.GetUnit<TranningChannal>().deltaWeigth, inputBulgess[i].weight, 1e-5, $"i = {i}");
@@ -67,19 +67,18 @@ namespace NeuralNetworkTest
             }
             Assert.AreEqual("active active ", log.log);
             Assert.AreEqual(2, b.units.GetUnit<CountingChannal>().counter.tranCount);
-            Assert.AreEqual(2, cell.units.GetUnit<CountingCellUnit>().counter.tranCount);
+            Assert.AreEqual(2, cell.units.GetUnit<CellUnit<CountingChannal, Counter>>().action.tranCount);
         }
         [Test]
         public void testUnitUseAve()
         {
-            var apply = new ApplyCellUnit();
-            apply.cell = new Cell();
-            var act = new ActiveCellUnit();
-            var counting = new CountingCellUnit();
+            var apply = new ApplyAction();
+            var act = new ActiveAction();
+            var counting = new Counter();
             apply.active = act;
             apply.counting = counting;
-            counting.counter.totalWidth = 5;
-            counting.counter.tranCount = 10;
+            counting.totalWidth = 5;
+            counting.tranCount = 10;
             apply.ActiveSelf();
             Assert.AreEqual(0.5, act.bias,1e-5);
         }

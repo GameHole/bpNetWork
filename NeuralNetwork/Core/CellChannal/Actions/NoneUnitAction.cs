@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NeuralNetwork
 {
-    public class NoneTranningUnit:TranningCellUnit
+    class NoneUnitAction : AUnitAction
     {
         public override void ActiveSelf()
         {

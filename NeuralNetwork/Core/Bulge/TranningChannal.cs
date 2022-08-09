@@ -13,7 +13,7 @@
         }
         public CountingChannal counting;
         public double deltaWeigth;
-        private TranningCellUnit To => bulge.to.units.GetUnit<TranningCellUnit>();
+        private TranningBasic To => bulge.to.units.GetUnit<CellUnit<TranningChannal, TranningBasic>>().action;
         public override void ActiveSelf()
         {
             deltaWeigth = getToDeltaBias() * bulge.from.value;

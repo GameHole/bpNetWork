@@ -28,5 +28,17 @@ namespace NeuralNetworkTest
             Assert.NotNull(log);
             Assert.AreSame(bulge, log.bulge);
         }
+        [Test]
+        public void testCellUnit()
+        {
+            var unit = new CellUnit<LogChannal, LogUnitAction>(true);
+            Assert.IsTrue(unit.activeInverse);
+            Assert.AreSame(typeof(LogChannal),unit.ChannalType);
+            var cell = new Cell();
+            unit.cell = cell;
+            Assert.AreSame(cell, unit.action.cell);
+            unit.ActiveSelf();
+            Assert.AreEqual("active ", unit.action.log);
+        }
     }
 }

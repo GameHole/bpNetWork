@@ -8,10 +8,10 @@ namespace NeuralNetwork
         private Bulge input;
         protected override void AddUnits()
         {
-            units.AddUnit<InputActiveCellUnit>();
-            units.AddUnit<NoneTranningUnit>();
-            units.AddUnit<NoneApplyUnit>();
-            units.AddUnit<CountingCellUnit>();
+            units.AddUnit<CellUnit<ActiveChannal,NoneUnitAction>>();
+            units.AddUnit<CellUnit<TranningChannal, TranningBasic>>();
+            units.AddUnit<CellUnit<ApplyChannal, NoneUnitAction>>();
+            units.AddUnit<CellUnit<CountingChannal, Counter>>();
         }
         public override Bulge AddInput(Cell cell)
         {
@@ -24,7 +24,7 @@ namespace NeuralNetwork
 
         public void Reset()
         {
-            Active(units.GetUnit<CountingCellUnit>());
+            Active(typeof(CountingChannal));
         }
 
         public double ieta;
@@ -33,8 +33,8 @@ namespace NeuralNetwork
             Deactive();
             input.Active(this, typeof(ActiveChannal));
             input.weight = 1;
-            units.GetUnit<NoneTranningUnit>().deltaBias = ieta * (value - input.units.GetUnit<ActiveChannal>().GetValue());
-            Active(units.GetUnit<NoneTranningUnit>());
+            units.GetUnit<CellUnit<TranningChannal, TranningBasic>>().action.deltaBias = ieta * (value - input.units.GetUnit<ActiveChannal>().GetValue());
+            Active(typeof(TranningChannal));
         }
 
         public void Apply()

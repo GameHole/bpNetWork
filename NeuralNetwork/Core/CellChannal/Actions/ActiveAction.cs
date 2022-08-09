@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NeuralNetwork
 {
-    public class ActiveCellUnit : ACellUnit<ActiveChannal>
+    public class ActiveAction : AUnitAction
     {
         public double bias;
         public override void ActiveSelf()

@@ -4,11 +4,11 @@ using System.Text;
 
 namespace NeuralNetwork
 {
-    class InputActiveCellUnit : ACellUnit<ActiveChannal>
+    public class TranningBasic : AUnitAction
     {
+        public double deltaBias { get; set; }
         public override void ActiveSelf()
         {
-            
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NeuralNetwork
 {
-    public class ApplyCellUnit : ACellUnit<ApplyChannal>
+    public class ApplyAction:AUnitAction
     {
         public override Cell cell
         {
@@ -12,14 +12,14 @@ namespace NeuralNetwork
             set
             {
                 base.cell = value;
-                active = value.units.GetUnit<ActiveCellUnit>();
-                counting = value.units.GetUnit<CountingCellUnit>();
+                active = value.units.GetUnit<CellUnit<ActiveChannal, ActiveAction>>().action;
+                counting = value.units.GetUnit<CellUnit<CountingChannal, Counter>>().action;
             }
         }
 
-        public CountingCellUnit counting;
+        public Counter counting;
 
-        public ActiveCellUnit active;
+        public ActiveAction active;
         public override void ActiveSelf()
         {
             active.bias += counting.GetValue();

@@ -7,7 +7,7 @@ namespace NeuralNetwork
     {
         protected override void AddUnits()
         {
-            units.AddUnit<InputActiveCellUnit>();
+            units.AddUnit<CellUnit<ActiveChannal, NoneUnitAction>>();
         }
     }
 }

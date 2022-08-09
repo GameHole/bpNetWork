@@ -12,13 +12,13 @@ namespace NeuralNetworkTest
         public void SetUp()
         {
             cell = new Cell();
-            cell.units.GetUnit<ActiveCellUnit>().bias = 1;
+            cell.units.GetUnit<CellUnit<ActiveChannal, ActiveAction>>().action.bias = 1;
             actviter = new Actviter();
         }
         [Test]
         public void testCell()
         {
-            Assert.AreEqual(1, cell.units.GetUnit<ActiveCellUnit>().bias);
+            Assert.AreEqual(1, cell.units.GetUnit<CellUnit<ActiveChannal, ActiveAction>>().action.bias);
         }
         [Test]
         public void testSetUnitCell()
@@ -63,8 +63,8 @@ namespace NeuralNetworkTest
         public void testInitCell()
         {
             cell = new Cell();
-            Assert.GreaterOrEqual(cell.units.GetUnit<ActiveCellUnit>().bias,0);
-            Assert.LessOrEqual(cell.units.GetUnit<ActiveCellUnit>().bias, 1);
+            Assert.GreaterOrEqual(cell.units.GetUnit<CellUnit<ActiveChannal, ActiveAction>>().action.bias,0);
+            Assert.LessOrEqual(cell.units.GetUnit<CellUnit<ActiveChannal, ActiveAction>>().action.bias, 1);
         }
         [Test]
         public void testCellUnit()
@@ -85,8 +85,8 @@ namespace NeuralNetworkTest
                 bulg.weight = 0.1 * idx;
             }
             var integration = 1 * 0.1 + 2 * 0.2 + 3 * 0.3 + 1;
-            var act = cell.units.GetUnit<ActiveCellUnit>();
-            Assert.AreEqual(integration, act.integrate(), 1e-5);
+            var act = cell.units.GetUnit<CellUnit<ActiveChannal, ActiveAction>>();
+            Assert.AreEqual(integration, act.action.integrate(), 1e-5);
             cell.Active(act);
             Assert.AreEqual(actviter.Actvite(integration), cell.value, 1e-5);
         }

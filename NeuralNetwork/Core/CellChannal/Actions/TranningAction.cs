@@ -4,29 +4,25 @@ using System.Text;
 
 namespace NeuralNetwork
 {
-    public class TranningCellUnit : ACellUnit<TranningChannal>
+    public class TranningAction:TranningBasic
     {
         public override Cell cell
         {
-            get => base.cell; 
+            get => base.cell;
             set
             {
                 base.cell = value;
-                active = value.units.GetUnit<ActiveCellUnit>();
-                countting = value.units.GetUnit<CountingCellUnit>();
+                active = value.units.GetUnit<CellUnit<ActiveChannal, ActiveAction>>().action;
+                countting = value.units.GetUnit<CellUnit<CountingChannal, Counter>>().action;
             }
         }
-        private ActiveCellUnit active;
-        private CountingCellUnit countting;
-
-        public double deltaBias { get; set; }
-
-        public override bool activeInverse => true;
+        private ActiveAction active;
+        private Counter countting;
 
         public override void ActiveSelf()
         {
             deltaBias = integrateInternal() * cell.actviter.Derivative(active.integrate());
-            countting.counter.Count(deltaBias);
+            countting.Count(deltaBias);
         }
         private double integrateInternal()
         {

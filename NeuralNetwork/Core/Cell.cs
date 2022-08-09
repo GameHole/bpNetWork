@@ -76,10 +76,12 @@ namespace NeuralNetwork
 
         protected virtual void AddUnits()
         {
-            units.AddUnit<ActiveCellUnit>();
-            units.AddUnit<CountingCellUnit>();
-            units.AddUnit<TranningCellUnit>();
-            units.AddUnit<ApplyCellUnit>();
+            units.AddUnit<CellUnit<ActiveChannal, ActiveAction>>();
+            units.AddUnit<CellUnit<CountingChannal, Counter>>();
+            var unit = units.AddUnit<CellUnit<TranningChannal, TranningBasic>>();
+            unit._inverse = true;
+            unit.action = new TranningAction();
+            units.AddUnit<CellUnit<ApplyChannal, ApplyAction>>();
         }
 
         public void InitUnits()

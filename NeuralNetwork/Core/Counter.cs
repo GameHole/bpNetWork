@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NeuralNetwork
 {
-    public class Counter
+    public class Counter:AUnitAction
     {
         public int tranCount;
         public double totalWidth;
@@ -24,6 +24,11 @@ namespace NeuralNetwork
         {
             tranCount++;
             totalWidth += v;
+        }
+
+        public override void ActiveSelf()
+        {
+            Reset();
         }
     }
 }

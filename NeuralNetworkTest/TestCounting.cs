@@ -29,17 +29,6 @@ namespace NeuralNetworkTest
             Assert.AreEqual(1, counting.tranCount);
         }
         [Test]
-        public void testUnit()
-        {
-            var counting = new CountingCellUnit();
-            counting.counter.totalWidth = 5;
-            counting.counter.tranCount = 10;
-            Assert.AreEqual(0.5, counting.GetValue());
-            counting.ActiveSelf();
-            Assert.AreEqual(0, counting.counter.tranCount);
-            Assert.AreEqual(0, counting.counter.totalWidth);
-        }
-        [Test]
         public void testChannal()
         {
             var counting = new CountingChannal();
